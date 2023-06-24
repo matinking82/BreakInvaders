@@ -26,7 +26,7 @@ public class ball implements IShowableObject {
         i++;
     }
 
-    public int getEllipseY() {
+    public int getY() {
         return ellipseY;
     }
 
