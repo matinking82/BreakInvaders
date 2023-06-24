@@ -1,5 +1,7 @@
 package Objects;
 
+import java.util.Random;
+
 import interfaces.IHittableObject;
 import interfaces.IShowableObject;
 import processing.core.PApplet;
@@ -8,8 +10,8 @@ public class Brick implements IShowableObject ,IHittableObject   {
     
     PApplet processing;
     int level;
-    private   int width;
-    private   int height;
+    private int width;
+    private int height;
     // public static int speedY=-80;
     private int Blocky;
     private int Blockx;
@@ -41,6 +43,8 @@ public class Brick implements IShowableObject ,IHittableObject   {
                 break;
         }
         this.processing=processing;
+        Blocky = -height;
+        Blockx = randomNum(10, processing.width-width-10);
 
 
     }
@@ -88,11 +92,13 @@ public class Brick implements IShowableObject ,IHittableObject   {
 
     @Override
     public void move() {
-
+        Blocky += 10;
     }
 
 
-
-
+    private int randomNum(int start, int end) {
+        Random random = new Random();
+        return random.nextInt(end - start + 1) + start;
+    }
     
 }
