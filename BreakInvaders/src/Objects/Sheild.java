@@ -21,12 +21,8 @@ public class Sheild implements IShowableObject, ICollectibleItem {
 
     @Override
     public void show() {
-<<<<<<< HEAD
         processing.image(processing.loadImage("../images/Shield.png"), sheildX, sheildY, sheildwidth,
                 sheildheight);
-=======
-     processing.image(processing.loadImage("../images/"), sheildX, sheildY, sheildheight, sheildwidth);
->>>>>>> 315ecb6e7e2fb0cd9d91fcf0c845a8279b973585
     }
 
     @Override
