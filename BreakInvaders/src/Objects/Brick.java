@@ -4,7 +4,7 @@ import interfaces.IHittableObject;
 import interfaces.IShowableObject;
 import processing.core.PApplet;
 
-public class Brick implements IShowableObject ,IHittableObject  {
+public class Brick implements IShowableObject ,IHittableObject   {
     
     PApplet processing;
     int level;
@@ -85,8 +85,11 @@ public class Brick implements IShowableObject ,IHittableObject  {
         heart--;
 
     }
-    
 
+    @Override
+    public void move() {
+
+    }
 
 
 
