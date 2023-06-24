@@ -1,5 +1,7 @@
 package Objects;
 
+import java.util.Random;
+
 import interfaces.ICollectibleItem;
 import interfaces.IShowableObject;
 import processing.core.PApplet;
@@ -17,6 +19,8 @@ public class DoubleScore implements ICollectibleItem ,IShowableObject{
         this.width=width;
         this.height=height;
         this.processing=processing;
+        scoreY-=height;
+        scoreX=randomNum(10, processing.width-width-10);
     }
     
 
@@ -74,6 +78,13 @@ public class DoubleScore implements ICollectibleItem ,IShowableObject{
     public void setScoreY(int scoreY) {
         this.scoreY = scoreY;
     }
+    private int randomNum(int start, int end) {
+        Random random = new Random();
+        return random.nextInt(end - start + 1) + start;
+    }
+
+
+
 
 
 

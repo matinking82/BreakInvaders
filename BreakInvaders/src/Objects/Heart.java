@@ -1,5 +1,7 @@
 package Objects;
 
+import java.util.Random;
+
 import interfaces.ICollectibleItem;
 import interfaces.IShowableObject;
 import processing.core.PApplet;
@@ -16,6 +18,8 @@ public class Heart implements IShowableObject , ICollectibleItem {
         this.processing=processing;
         this.width=width;
         this.height=height;
+        heartY-=height;
+        heartX=randomNum(10, processing.width-width-10);
     }
 
     @Override
@@ -64,6 +68,10 @@ public class Heart implements IShowableObject , ICollectibleItem {
     public void move() {
         heartY+=10;
 
+    }
+    private int randomNum(int start, int end) {
+        Random random = new Random();
+        return random.nextInt(end - start + 1) + start;
     }
 
 
