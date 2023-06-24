@@ -22,7 +22,7 @@ public class Sheild implements IShowableObject,ICollectibleItem{
 
     @Override
     public void show() {
-     //processing.image(processing.loadImage("../images/"), sheildX, sheildX, sheildX, sheildX, sheildwidth, sheildheight, sheildY, sheildX);
+     processing.image(processing.loadImage("../images/"), sheildX, sheildY, sheildheight, sheildwidth);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class Sheild implements IShowableObject,ICollectibleItem{
 
     @Override
     public void move() {
-
+    this.sheildY+=10;
     }
     
 }

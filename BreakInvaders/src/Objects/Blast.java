@@ -22,17 +22,16 @@ public class Blast implements IShowableObject,ICollectibleItem{
      @Override
     public void show() {
         processing.image(processing.loadImage("../images/"), blastX, blastY, blastHeight, blastWidth);
-        throw new UnsupportedOperationException("Unimplemented method 'show'");
     }
 
     @Override
     public void Collect() {
-        throw new UnsupportedOperationException("Unimplemented method 'Collect'");
+    
     }
 
     @Override
     public void move() {
-        throw new UnsupportedOperationException("Unimplemented method 'move'");
+        this.blastY+=10;
     }
     public int getBlastX() {
         return this.blastX;
