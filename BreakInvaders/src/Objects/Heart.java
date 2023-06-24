@@ -60,6 +60,11 @@ public class Heart implements IShowableObject , ICollectibleItem {
         this.heartY = heartY;
     }
 
+    @Override
+    public void move() {
+
+    }
+
 
 
     
