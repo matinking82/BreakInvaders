@@ -21,7 +21,7 @@ public class Blast implements IShowableObject,ICollectibleItem{
 
      @Override
     public void show() {
-        processing.image(processing.loadImage("../images/"), blastX, blastY, blastHeight, blastWidth);
+        processing.image(processing.loadImage("../images/Blast.png"), blastX, blastY, blastHeight, blastWidth);
         throw new UnsupportedOperationException("Unimplemented method 'show'");
     }
 

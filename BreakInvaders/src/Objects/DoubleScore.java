@@ -22,7 +22,7 @@ public class DoubleScore implements ICollectibleItem ,IShowableObject{
 
     @Override
     public void show() {
-        // processing.image(processing.loadImage("../images"),scoreX , scoreY,  width, height);
+         processing.image(processing.loadImage("../images/DoubleScore.png"),scoreX , scoreY,  width, height);
     }
 
     @Override

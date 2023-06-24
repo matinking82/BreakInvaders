@@ -19,7 +19,7 @@ public class DoubleB implements IShowableObject,ICollectibleItem{
     }
     @Override
     public void show() {
-        processing.image(processing.loadImage("../images/"), doubleBX, doubleBY, doubleBHeight, doubleBWidth);
+        processing.image(processing.loadImage("../images/DoubleB.png"), doubleBX, doubleBY, doubleBHeight, doubleBWidth);
 
     }
     @Override

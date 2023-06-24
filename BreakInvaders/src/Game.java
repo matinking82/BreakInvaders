@@ -32,7 +32,7 @@ public class Game extends PApplet {
         if (mouseButton == LEFT) {
             fire();
         } else {
-            exit();
+
         }
     }
 

@@ -20,7 +20,7 @@ public class Heart implements IShowableObject , ICollectibleItem {
 
     @Override
     public void show() {
-        //processing.image(processing.loadImage("../images") , heartX , heartY  ,width , height);
+        processing.image(processing.loadImage("../images/Heart.png") , heartX , heartY  ,width , height);
         
     }
 
