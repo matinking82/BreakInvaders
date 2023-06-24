@@ -28,6 +28,7 @@ public class DoubleB implements IShowableObject,ICollectibleItem{
     }
     @Override
     public void move() {
+        doubleBY+=10;
     }
 
     public int getDoubleBX() {

@@ -62,6 +62,7 @@ public class Heart implements IShowableObject , ICollectibleItem {
 
     @Override
     public void move() {
+        heartY+=10;
 
     }
 

@@ -27,6 +27,7 @@ public class DoubleScore implements ICollectibleItem ,IShowableObject{
 
     @Override
     public void move() {
+        scoreY+=10;
 
     }
 
