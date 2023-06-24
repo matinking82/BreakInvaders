@@ -2,6 +2,9 @@ package Objects;
 
 import interfaces.IShowableObject;
 import processing.core.PApplet;
+
+import java.util.Random;
+
 import interfaces.ICollectibleItem;
 
 public class DoubleB implements IShowableObject,ICollectibleItem{
@@ -16,6 +19,8 @@ public class DoubleB implements IShowableObject,ICollectibleItem{
         this.doubleBHeight=doubleBHeight;
         this.doubleBWidth=doubleBWidth;
         this.processing=processing;
+        doubleBY = -doubleBHeight;
+        doubleBX = randomNum(10, processing.width-doubleBWidth-10);
     }
     @Override
     public void show() {
@@ -54,6 +59,10 @@ public class DoubleB implements IShowableObject,ICollectibleItem{
     }
     public void setDoubleBHeight(int doubleBHeight) {
         this.doubleBHeight = doubleBHeight;
+    }
+    private int randomNum(int start, int end) {
+        Random random = new Random();
+        return random.nextInt(end - start + 1) + start;
     }
     
 }

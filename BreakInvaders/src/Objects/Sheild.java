@@ -2,6 +2,9 @@ package Objects;
 
 import interfaces.IShowableObject;
 import processing.core.PApplet;
+
+import java.util.Random;
+
 import interfaces.ICollectibleItem;
 
 public class Sheild implements IShowableObject, ICollectibleItem {
@@ -13,10 +16,13 @@ public class Sheild implements IShowableObject, ICollectibleItem {
     static boolean sheildAffect = false;
 
     public Sheild(int sheildheight, int sheildwidth, PApplet processing) {
-
         this.sheildheight = sheildheight;
         this.sheildwidth = sheildwidth;
         this.processing = processing;
+        sheildY-=sheildheight;
+        sheildX = randomNum(10, processing.width-sheildwidth-10);
+
+
     }
 
     @Override
@@ -65,6 +71,10 @@ public class Sheild implements IShowableObject, ICollectibleItem {
     @Override
     public void move() {
     this.sheildY+=10;
+    }
+    private int randomNum(int start, int end) {
+        Random random = new Random();
+        return random.nextInt(end - start + 1) + start;
     }
 
 }

@@ -2,6 +2,9 @@ package Objects;
 
 import interfaces.IShowableObject;
 import processing.core.PApplet;
+
+import java.util.Random;
+
 import interfaces.ICollectibleItem;
 
 
@@ -17,6 +20,8 @@ public class Blast implements IShowableObject,ICollectibleItem{
      this.blastHeight=blastHeight;
      this.blastWidth=blastWidth;
      this.processing=processing;
+     blastY = -blastHeight;
+     blastX = randomNum(10, processing.width-blastWidth-10);
     }
 
      @Override
@@ -63,5 +68,9 @@ public class Blast implements IShowableObject,ICollectibleItem{
 
     public void setBlastWidth(int blastWidth) {
         this.blastWidth = blastWidth;
-    }  
+    } 
+    private int randomNum(int start, int end) {
+        Random random = new Random();
+        return random.nextInt(end - start + 1) + start;
+    } 
 }
