@@ -23,6 +23,7 @@ public class ball implements IShowableObject {
     public void show() {
         processing.image(processing.loadImage("../images/bullet/" + Integer.toString((i % 8) / 2 + 1) + ".png"),
                 ellipseX, ellipseY, ellipseWidth, ellipseHeight);
+        i++;
     }
 
     public int getEllipseY() {
@@ -51,7 +52,7 @@ public class ball implements IShowableObject {
 
     @Override
     public void move() {
-        ellipseY-= 30;
+        ellipseY -= 30;
     }
 
 }
