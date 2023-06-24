@@ -5,6 +5,7 @@ import java.util.Random;
 import interfaces.IHittableObject;
 import interfaces.IShowableObject;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class Brick implements IShowableObject ,IHittableObject   {
     
@@ -16,6 +17,7 @@ public class Brick implements IShowableObject ,IHittableObject   {
     private int Blocky;
     private int Blockx;
     private int heart;
+    private PImage img;
 
 
     public Brick(int width  , int height  , int level , PApplet processing)
@@ -23,6 +25,7 @@ public class Brick implements IShowableObject ,IHittableObject   {
         this.width=width;
         this.height=height;
         this.level=level;
+        img = processing.loadImage("../images/chick"+level+".png");
         switch (level) {
             case 1:
               this.heart=2;
@@ -81,7 +84,7 @@ public class Brick implements IShowableObject ,IHittableObject   {
     }
     public void show()
     {
-        processing.image(processing.loadImage("../images/chick"+level+".png"), Blockx, Blocky, width, height);
+        processing.image(img, Blockx, Blocky, width, height);
 
 
     }
