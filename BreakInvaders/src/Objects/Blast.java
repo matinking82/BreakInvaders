@@ -42,7 +42,7 @@ public class Blast implements IShowableObject,ICollectibleItem{
         this.blastX = blastX;
     }
 
-    public int getBlastY() {
+    public int getY() {
         return this.blastY;
     }
 

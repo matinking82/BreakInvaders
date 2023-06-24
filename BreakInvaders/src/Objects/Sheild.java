@@ -32,7 +32,7 @@ public class Sheild implements IShowableObject,ICollectibleItem{
     public int getShieldX(){
         return this.sheildX;
     }
-    public int getShieldY(){
+    public int getY(){
         return this.sheildY;
     }
     public int getShieldHeight(){
