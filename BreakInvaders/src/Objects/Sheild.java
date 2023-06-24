@@ -53,5 +53,10 @@ public class Sheild implements IShowableObject,ICollectibleItem{
     public void setShieldWidth(int w){
        this.sheildwidth=w;
          }
+
+    @Override
+    public void move() {
+
+    }
     
 }
