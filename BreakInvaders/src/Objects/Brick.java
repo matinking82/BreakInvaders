@@ -23,17 +23,18 @@ public class Brick implements IShowableObject ,IHittableObject   {
         this.level=level;
         switch (level) {
             case 1:
-              heart=2;
+              this.heart=2;
               break;
             case 2:
-                heart=4; 
+                this.heart=4; 
                 break;
 
             case 3:
-                heart=6;
+                this.heart=6;
                 break; 
+
             case 4:
-               heart=10;
+               this.heart=10;
                break;
         
             default:
@@ -43,7 +44,7 @@ public class Brick implements IShowableObject ,IHittableObject   {
 
 
     }
-    public int getBlocky() {
+    public int getY() {
         return Blocky;
     }
 
@@ -83,7 +84,6 @@ public class Brick implements IShowableObject ,IHittableObject   {
     public void hit()
     {
         heart--;
-
     }
 
     @Override

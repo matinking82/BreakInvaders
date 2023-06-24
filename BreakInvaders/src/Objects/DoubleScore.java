@@ -4,7 +4,7 @@ import interfaces.ICollectibleItem;
 import interfaces.IShowableObject;
 import processing.core.PApplet;
 
-public class Score implements ICollectibleItem ,IShowableObject{
+public class DoubleScore implements ICollectibleItem ,IShowableObject{
     PApplet processing;
     private int width;
     private int height;
@@ -12,7 +12,7 @@ public class Score implements ICollectibleItem ,IShowableObject{
     private int scoreY;
 
 
-    public Score(int width , int height , PApplet processing)
+    public DoubleScore(int width , int height , PApplet processing)
     {
         this.width=width;
         this.height=height;
@@ -34,7 +34,7 @@ public class Score implements ICollectibleItem ,IShowableObject{
     public void Collect() {
 
     }
-    
+
     public int getWidth() {
         return width;
     }
@@ -65,7 +65,7 @@ public class Score implements ICollectibleItem ,IShowableObject{
     }
 
 
-    public int getScoreY() {
+    public int getY() {
         return scoreY;
     }
 
