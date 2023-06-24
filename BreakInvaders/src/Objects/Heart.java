@@ -52,7 +52,7 @@ public class Heart implements IShowableObject , ICollectibleItem {
         this.heartX = heartX;
     }
 
-    public int getHeartY() {
+    public int getY() {
         return heartY;
     }
 
