@@ -85,7 +85,7 @@ public class Game extends PApplet {
         background(0);
         fill(122, 150, 235);
         textSize(60);
-        text("BreakInvaders", (width/2)-140, 120);
+        text("BreakInvaders", (width/2)-200, 120);
 
         fill(0, 0, 0);
         stroke(222, 207, 73);
