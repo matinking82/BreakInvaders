@@ -6,12 +6,14 @@ import Objects.SpaceShip;
 import Objects.ball;
 import interfaces.IShowableObject;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class Game extends PApplet {
     private int chickenCount;
     private int chickenRemain;
     private static int button=0;
     private static boolean gameOver;
+    private PImage pauseImage;
 
     List<IShowableObject> objects;
     
@@ -20,7 +22,8 @@ public class Game extends PApplet {
     public void setup() {
         objects = new ArrayList<IShowableObject>();
         objects.add(new SpaceShip((int) (width * 0.1), (int) (width * 0.1), this));
-        noCursor();
+        //noCursor();
+        pauseImage = loadImage("../images/pause.png");
     }
 
     @Override
@@ -69,52 +72,57 @@ public class Game extends PApplet {
         background(0);
         fill(122, 150, 235);
         textSize(60);
-        text("BreakInvaders" ,110 ,100);
+        text("BreakInvaders" ,570 ,120);
 
         fill(0 ,0 ,0);
         stroke(222, 207, 73);
-        rect(100 ,220 ,190 ,40);
+        rect(580 ,300 ,380 ,40);
         fill(222, 207, 73);
         textSize(30);
-        text("Start Game" ,125 ,250);
+        text("Start Game" ,685 ,330);
 
         fill(0 ,0 ,0);
         stroke(222, 207, 73);
-        rect(100 ,280 ,190 ,40);
+        rect(580 ,360 ,380 ,40);
         fill(222, 207, 73);
         textSize(30);
-        text("Records" ,150 ,310);
+        text("Records" ,710 ,390);
         
         fill(0 ,0 ,0 );
         stroke(222, 207, 73);
-        rect(100 ,280 ,190 ,40);
+        rect(580 ,420 ,380 ,40);
         fill(222, 207, 73);
         textSize(30);
-        text("Resume" ,150 ,370);
+        text("Resume" ,710 ,450);
         
 
         fill(0 ,0 ,0);
         stroke(222, 207, 73);
-        rect(100 ,340 ,190 ,40);
+        rect(580 ,480 ,380 ,40);
         fill(222, 207, 73);
         textSize(30);
-        text("Exsit" ,165  ,430);
+        text("Exit" ,730  ,510);
         ButtonClicked();
     }
 
     public void ButtonClicked()
     {
 
-        if(mouseX>100 && mouseX<290 && mouseY>220 &&mouseY<260 && mousePressed )
+        if(mouseX>580 && mouseX<960 && mouseY>300 &&mouseY<340 && mousePressed )
         {
             button=1;
         }
-        else if(mouseX>100 && mouseX<290 && mouseY>280 && mouseY<320 && mousePressed) {
+        else if(mouseX>580 && mouseX<960 && mouseY>360 && mouseY<400 && mousePressed) {
             button=3;
         }
-        else if (mouseX>100 && mouseX<260 && mouseY>340 && mouseY<380 && mousePressed)
+        else if (mouseX>580 && mouseX<960 && mouseY>420 && mouseY<460 && mousePressed)
         {
             button=2;
+        }
+        else if(mouseX>580 && mouseX<960 && mouseY>480 && mouseY<520 && mousePressed )
+        {
+            exit();
+
         }
         else {
             button=0;
@@ -127,8 +135,9 @@ public class Game extends PApplet {
         
         if(gameOver!=true)
         {
-            textOnPage();
+            
             background(0);
+            textOnPage();
             for (IShowableObject obj : objects) {
                 obj.move();
                 obj.show();
@@ -229,9 +238,10 @@ public class Game extends PApplet {
     public void textOnPage()
     {
         fill(201, 14, 20);
-        textSize(25);
-        text("Lives :"  , 300,50);
-        text("Score :" ,20 ,50);
+        textSize(35);
+        image(pauseImage,width - 60 , 10, 50,50 );
+        text("Lives :"  , 20,40);
+        text("Score :" ,20 ,90);
         
 
     }
