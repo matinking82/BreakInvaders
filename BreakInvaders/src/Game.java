@@ -1,13 +1,20 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import Objects.Brick;
 import Objects.SpaceShip;
 import Objects.ball;
 import interfaces.IShowableObject;
 import processing.core.PApplet;
 
 public class Game extends PApplet {
+    private int chickenCount;
+    private int chickenRemain;
+    private static int button=0;
+    private static boolean gameOver;
+
     List<IShowableObject> objects;
+    
 
     @Override
     public void setup() {
@@ -18,12 +25,19 @@ public class Game extends PApplet {
 
     @Override
     public void draw() {
-        background(0);
+        if (button == 1) {
+            startGame();
 
-        for (IShowableObject obj : objects) {
-            obj.move();
-            obj.show();
+        } else if (button == 2) {
+            exit();
+        } else if (button == 3) {
+
+
+        } else {
+            menu();
         }
+
+        
 
     }
 
@@ -49,4 +63,200 @@ public class Game extends PApplet {
         objects.add(b1);
         objects.add(b2);
     }
+    private void menu()
+    {
+        gameOver=false;
+        background(0);
+        fill(122, 150, 235);
+        textSize(60);
+        text("BreakInvaders" ,110 ,100);
+
+        fill(0 ,0 ,0);
+        stroke(222, 207, 73);
+        rect(100 ,220 ,190 ,40);
+        fill(222, 207, 73);
+        textSize(30);
+        text("Start Game" ,125 ,250);
+
+        fill(0 ,0 ,0);
+        stroke(222, 207, 73);
+        rect(100 ,280 ,190 ,40);
+        fill(222, 207, 73);
+        textSize(30);
+        text("Records" ,150 ,310);
+        
+        fill(0 ,0 ,0 );
+        stroke(222, 207, 73);
+        rect(100 ,280 ,190 ,40);
+        fill(222, 207, 73);
+        textSize(30);
+        text("Resume" ,150 ,370);
+        
+
+        fill(0 ,0 ,0);
+        stroke(222, 207, 73);
+        rect(100 ,340 ,190 ,40);
+        fill(222, 207, 73);
+        textSize(30);
+        text("Exsit" ,165  ,430);
+        ButtonClicked();
+    }
+
+    public void ButtonClicked()
+    {
+
+        if(mouseX>100 && mouseX<290 && mouseY>220 &&mouseY<260 && mousePressed )
+        {
+            button=1;
+        }
+        else if(mouseX>100 && mouseX<290 && mouseY>280 && mouseY<320 && mousePressed) {
+            button=3;
+        }
+        else if (mouseX>100 && mouseX<260 && mouseY>340 && mouseY<380 && mousePressed)
+        {
+            button=2;
+        }
+        else {
+            button=0;
+
+        }
+        mousePressed=false;
+    }
+    private void startGame()
+    {
+        
+        if(gameOver!=true)
+        {
+            textOnPage();
+            background(0);
+            for (IShowableObject obj : objects) {
+                obj.move();
+                obj.show();
+            }
+        }
+        else{
+            lost();
+        }
+
+        
+
+    }
+    // private void wone()
+    // {
+    //     for (int j=0 ; j<5000 ; j++){
+
+    //         background(0);
+    //     }
+    //     fill(44, 181, 16);
+    //     textSize(50);
+    //     text("You Won!" , 100 , 250);
+
+
+    //     fill(44, 181, 16);
+    //     textSize(30);
+    //     text("Lives: " , 155 , 300);
+
+    //     fill(44, 181, 16);
+    //     textSize(30);
+    //     text("Score: " , 150 , 340);
+
+    //     fill(20, 20, 20);
+    //     stroke(44, 181, 16);
+    //     rect(100 ,380 ,190 ,40);
+    //     fill(44, 181, 16);
+    //     textSize(30);
+    //     text("Menu" ,160 ,410);
+
+    //     fill(20, 20, 20);
+    //     stroke(44, 181, 16);
+    //     rect(100 ,440 ,190 ,40);
+    //     fill(44, 181, 16);
+    //     textSize(30);
+    //     text("Exit" ,170 ,470);
+    //     ButtonClicked4();
+    // }
+
+    // public void ButtonClicked4() {
+
+    //     if (mouseX > 100 && mouseX < 290 && mouseY > 380 && mouseY < 420 && mousePressed) {
+    //         button = 0;
+
+    //     }
+    //     else if (mouseX > 100 && mouseX < 290 && mouseY > 440 && mouseY < 480 && mousePressed) {
+    //         button = 2;
+    //     }
+    // }
+
+    public void lost()
+    {
+
+        for (int j=0 ; j<5000 ; j++){
+
+            background(0);
+        }
+        background(0);
+        fill(240, 0 , 10);
+        textSize(50);
+        text("GAME OVER!" , 66 , 300);
+
+        fill(0 ,0 ,0);
+        stroke(240, 0 , 10);
+        rect(100 ,350 ,190 ,40);
+        fill(240, 0 , 10);
+        textSize(30);
+        text("Menu" ,160 ,380);
+
+        fill(0 ,0 ,0);
+        stroke(240, 0 , 10);
+        rect(100 ,410 ,190 ,40);
+        fill(240, 0 , 10);
+        textSize(30);
+        text("Exit" ,170 ,440);
+        gameOver=true;
+        // ButtonClicked3();
+
+    }
+    // public void ButtonClicked3() {
+    //     if (mouseX > 100 && mouseX < 290 && mouseY > 350 && mouseY < 390 && mousePressed) {
+
+    //         button = 0;
+    //     }
+    //     else if (mouseX > 100 && mouseX < 290 && mouseY > 410 && mouseY < 450 && mousePressed) {
+    //         button = 2;
+    //     }
+    // }
+
+    public void textOnPage()
+    {
+        fill(201, 14, 20);
+        textSize(25);
+        text("Lives :"  , 300,50);
+        text("Score :" ,20 ,50);
+        
+
+    }
+
+    // public void pause()
+    // {
+    //     fill(89, 32, 11);
+    //     stroke(0 ,200 ,100);
+    //     strokeWeight(3);
+    //     rect(30 ,655 ,150 ,30);
+    //     fill(0 ,200 ,100);
+    //     textSize(30);
+    //     text("Retuern" ,55 ,680);
+    //     ButtonClicked2();
+    // }
+    // public void ButtonClicked2()
+    // {
+    //     if(mouseX>30 && mouseX<180 && mouseY>655 && mouseY<685&& mousePressed)
+    //     {
+    //         objects.clear();
+    //         button=0;
+    //     }
+    // }
+
+
+    
+
 }
