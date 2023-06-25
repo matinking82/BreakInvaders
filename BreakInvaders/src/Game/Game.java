@@ -16,6 +16,9 @@ public class Game extends PApplet {
     private static int button = 0;
     private static boolean gameOver;
     private PImage pauseImage;
+    public static int lives=3;
+    public static int score;
+    static int multiplier = 1;
 
     public static List<IShowableObject> objects;
     List<ball> balls;
@@ -134,7 +137,7 @@ public class Game extends PApplet {
 
     private void startGame() {
 
-        if (gameOver != true) {
+        if (!gameOver) {
 
             background(0);
             textOnPage();
@@ -148,6 +151,9 @@ public class Game extends PApplet {
                 obj.show();
                 if (obj.getY() > height) {
                     objects.remove(i);
+                    if (obj instanceof Brick) {
+                        loseHeart();
+                    }
                     i--;
                 }
             }
@@ -165,6 +171,7 @@ public class Game extends PApplet {
                         if (isHit(ball1, brick)) {
                             if(brick.hit()){
                                 objects.remove(j);
+                                score += multiplier*brick.getScore();
                             }
 
                             balls.remove(i);
@@ -270,8 +277,8 @@ public class Game extends PApplet {
         fill(201, 14, 20);
         textSize(35);
         image(pauseImage, width - 60, 10, 50, 50);
-        text("Lives :", 20, 40);
-        text("Score :", 20, 90);
+        text("Lives :"+lives, 20, 40);
+        text("Score :"+score, 20, 90);
 
     }
 
@@ -300,6 +307,15 @@ public class Game extends PApplet {
                 (ball1.getEllipseX() <= brick.getBlockx() + brick.getWidth()) &&
                 (ball1.getY() >= brick.getY() - ball1.getEllipseHeight())
                 && (ball1.getY() <= brick.getY() + brick.getHeight());
+    }
+    
+    public void loseHeart(){
+        lives--;
+        if(lives<=0)
+        {
+            gameOver=true;
+        }
+
     }
 
 }

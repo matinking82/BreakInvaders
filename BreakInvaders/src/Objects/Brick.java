@@ -8,9 +8,9 @@ import interfaces.IShowableObject;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class Brick implements IShowableObject ,IHittableObject   {
-    
-    PApplet processing;
+public class Brick implements IShowableObject, IHittableObject {
+
+    Game processing;
     int level;
     private int width;
     private int height;
@@ -19,39 +19,38 @@ public class Brick implements IShowableObject ,IHittableObject   {
     private int Blockx;
     private int heart;
     private PImage img;
-    boolean let=true;
+    boolean let = true;
 
-    public Brick(int width  , int height  , int level, PImage img, PApplet processing)
-    {
-        this.width=width;
-        this.height=height;
-        this.level=level;
+    public Brick(int width, int height, int level, PImage img, Game processing) {
+        this.width = width;
+        this.height = height;
+        this.level = level;
         this.img = img;
         switch (level) {
             case 1:
-              this.heart=2;
-              break;
+                this.heart = 2;
+                break;
             case 2:
-                this.heart=3; 
+                this.heart = 3;
                 break;
 
             case 3:
-                this.heart=5;
-                break; 
+                this.heart = 5;
+                break;
 
             case 4:
-               this.heart=10;
-               break;
-        
+                this.heart = 10;
+                break;
+
             default:
                 break;
         }
-        this.processing=processing;
+        this.processing = processing;
         Blocky = -height;
-        Blockx = randomNum(10, processing.width-width-10);
-
+        Blockx = randomNum(10, processing.width - width - 10);
 
     }
+
     public int getY() {
         return Blocky;
     }
@@ -83,30 +82,45 @@ public class Brick implements IShowableObject ,IHittableObject   {
     public void setHeight(int height) {
         this.height = height;
     }
-    public void show()
-    {
+
+    public void show() {
         processing.image(img, Blockx, Blocky, width, height);
-       
+
     }
-    public boolean hit()
-    {
+
+    public boolean hit() {
         heart--;
-        return heart<=0;
+        return heart <= 0;
     }
 
     @Override
     public void move() {
         Blocky += 10;
-        if(let&&Blocky>=2*height){
-          let=false;
-          Game.objects.add(new Brick((int)(processing.width*0.085),(int)(processing.width*0.085),level,img,processing));
+        if (let && Blocky >= 2 * height) {
+            let = false;
+            Game.objects.add(new Brick((int) (processing.width * 0.085), (int) (processing.width * 0.085), level, img,
+                    processing));
         }
     }
 
+    public int getScore() {
+        switch (level) {
+            case 1:
+                return 10;
+            case 2:
+                return 50;
+            case 3:
+                return 100;
+            case 4:
+                return 1000;
+            default:
+                return 0;
+        }
+    }
 
     private int randomNum(int start, int end) {
         Random random = new Random();
         return random.nextInt(end - start + 1) + start;
     }
-    
+
 }
