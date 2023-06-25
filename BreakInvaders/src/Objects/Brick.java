@@ -2,6 +2,7 @@ package Objects;
 
 import java.util.Random;
 
+import Game.Game;
 import interfaces.IHittableObject;
 import interfaces.IShowableObject;
 import processing.core.PApplet;
@@ -18,14 +19,14 @@ public class Brick implements IShowableObject ,IHittableObject   {
     private int Blockx;
     private int heart;
     private PImage img;
+    boolean let=true;
 
-
-    public Brick(int width  , int height  , int level , PApplet processing)
+    public Brick(int width  , int height  , int level, PImage img, PApplet processing)
     {
         this.width=width;
         this.height=height;
         this.level=level;
-        img = processing.loadImage("../images/chick"+level+".png");
+        this.img = img;
         switch (level) {
             case 1:
               this.heart=2;
@@ -85,8 +86,7 @@ public class Brick implements IShowableObject ,IHittableObject   {
     public void show()
     {
         processing.image(img, Blockx, Blocky, width, height);
-
-
+       
     }
     public void hit()
     {
@@ -96,6 +96,10 @@ public class Brick implements IShowableObject ,IHittableObject   {
     @Override
     public void move() {
         Blocky += 10;
+        if(let&&Blocky>=2*height){
+          let=false;
+          Game.objects.add(new Brick((int)(processing.width*0.085),(int)(processing.width*0.085),level,img,processing));
+        }
     }
 
 
