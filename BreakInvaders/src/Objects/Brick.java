@@ -32,11 +32,11 @@ public class Brick implements IShowableObject ,IHittableObject   {
               this.heart=2;
               break;
             case 2:
-                this.heart=4; 
+                this.heart=3; 
                 break;
 
             case 3:
-                this.heart=6;
+                this.heart=5;
                 break; 
 
             case 4:
@@ -88,9 +88,10 @@ public class Brick implements IShowableObject ,IHittableObject   {
         processing.image(img, Blockx, Blocky, width, height);
        
     }
-    public void hit()
+    public boolean hit()
     {
         heart--;
+        return heart<=0;
     }
 
     @Override
