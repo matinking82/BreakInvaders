@@ -85,35 +85,35 @@ public class Game extends PApplet {
         background(0);
         fill(122, 150, 235);
         textSize(60);
-        text("BreakInvaders", 570, 120);
+        text("BreakInvaders", (width/2)-140, 120);
 
         fill(0, 0, 0);
         stroke(222, 207, 73);
-        rect(580, 300, 380, 40);
+        rect((width/2)-190, 300, 380, 40);
         fill(222, 207, 73);
         textSize(30);
-        text("Start Game", 685, 330);
+        text("Start Game", (width/2)-70, 330);
 
         fill(0, 0, 0);
         stroke(222, 207, 73);
-        rect(580, 360, 380, 40);
+        rect((width/2)-190, 360, 380, 40);
         fill(222, 207, 73);
         textSize(30);
-        text("Records", 710, 390);
+        text("Records", (width/2)-50, 390);
 
         fill(0, 0, 0);
         stroke(222, 207, 73);
-        rect(580, 420, 380, 40);
+        rect((width/2)-190, 420, 380, 40);
         fill(222, 207, 73);
         textSize(30);
-        text("Resume", 710, 450);
+        text("Resume", (width/2)-50, 450);
 
         fill(0, 0, 0);
         stroke(222, 207, 73);
-        rect(580, 480, 380, 40);
+        rect((width/2)-190, 480, 380, 40);
         fill(222, 207, 73);
         textSize(30);
-        text("Exit", 730, 510);
+        text("Exit", (width/2)-30, 510);
         ButtonClicked();
     }
 
@@ -239,39 +239,40 @@ public class Game extends PApplet {
 
             background(0);
         }
+        textAlign(CENTER, CENTER);
         background(0);
         fill(240, 0, 10);
         textSize(50);
-        text("GAME OVER!", 66, 300);
+        text("GAME OVER!", width/2, 300);
 
         fill(0, 0, 0);
         stroke(240, 0, 10);
-        rect(100, 350, 190, 40);
+        rect((width/2)-190, 350, 380, 50);
         fill(240, 0, 10);
-        textSize(30);
-        text("Menu", 160, 380);
+        textSize(35);
+        text("Menu", (width/2), 370);
 
         fill(0, 0, 0);
         stroke(240, 0, 10);
-        rect(100, 410, 190, 40);
+        rect((width/2)-190, 410, 380, 50);
         fill(240, 0, 10);
-        textSize(30);
-        text("Exit", 170, 440);
+        textSize(35);
+        text("Exit", (width/2) , 430);
         gameOver = true;
-        // ButtonClicked3();
+        ButtonClicked3();
 
     }
-    // public void ButtonClicked3() {
-    // if (mouseX > 100 && mouseX < 290 && mouseY > 350 && mouseY < 390 &&
-    // mousePressed) {
+    public void ButtonClicked3() {
+        if (mouseX >(width/2)-190  && mouseX <(width/2)+190  && mouseY > 350 && mouseY < 400 &&
+        mousePressed) {
 
-    // button = 0;
-    // }
-    // else if (mouseX > 100 && mouseX < 290 && mouseY > 410 && mouseY < 450 &&
-    // mousePressed) {
-    // button = 2;
-    // }
-    // }
+             button = 0;
+        }
+        else if (mouseX > (width/2)-190 && mouseX < (width/2)+190 && mouseY > 410 && mouseY < 460 &&
+        mousePressed) {
+            button = 2;
+        }
+    }
 
     public void textOnPage() {
         fill(201, 14, 20);
