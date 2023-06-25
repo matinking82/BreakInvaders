@@ -100,6 +100,7 @@ public class Brick implements IShowableObject, IHittableObject {
             let = false;
             Game.objects.add(new Brick((int) (processing.width * 0.085), (int) (processing.width * 0.085), level, img,
                     processing));
+                    Game.counter++; 
         }
     }
 

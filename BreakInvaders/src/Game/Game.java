@@ -19,6 +19,7 @@ public class Game extends PApplet {
     public static int lives=3;
     public static int score;
     static int multiplier = 1;
+    public static int counter=0;
 
     public static List<IShowableObject> objects;
     List<ball> balls;
@@ -40,6 +41,7 @@ public class Game extends PApplet {
         int level = (int) (random(1, 3));
         objects.add(new Brick((int) (width * 0.085), (int) (width * 0.085), level,
                 loadImage("../images/chick" + level + ".png"), this));
+        counter++;       
     }
 
     @Override
@@ -138,100 +140,108 @@ public class Game extends PApplet {
     private void startGame() {
 
         if (!gameOver) {
-
-            background(0);
-            textOnPage();
-
-            for (int i = 0; i < objects.size(); i++) {
-                IShowableObject obj = objects.get(i);
-                if (obj == null) {
-                    continue;
-                }
-                obj.move();
-                obj.show();
-                if (obj.getY() > height) {
-                    objects.remove(i);
-                    if (obj instanceof Brick) {
-                        loseHeart();
+            if(counter!=objects.size())
+            {
+                background(0);
+                textOnPage();
+    
+                for (int i = 0; i < objects.size(); i++) {
+                    IShowableObject obj = objects.get(i);
+                    if (obj == null) {
+                        continue;
                     }
-                    i--;
+                    obj.move();
+                    obj.show();
+                    if (obj.getY() > height) {
+                        objects.remove(i);
+                        if (obj instanceof Brick) {
+                            loseHeart();
+                        }
+                        i--;
+                    }
                 }
-            }
-            for (int i = 0; i < balls.size(); i++) {
-                ball ball1 = balls.get(i);
-                ball1.move();
-                ball1.show();
-                if (ball1.getY() < 0) {
-                    balls.remove(i);
-                    i--;
-                }
-                for (int j = 0; j < objects.size(); j++) {
-                    if (objects.get(j) instanceof Brick) {
-                        Brick brick = (Brick) objects.get(j);
-                        if (isHit(ball1, brick)) {
-                            if(brick.hit()){
-                                objects.remove(j);
-                                score += multiplier*brick.getScore();
+                for (int i = 0; i < balls.size(); i++) {
+                    ball ball1 = balls.get(i);
+                    ball1.move();
+                    ball1.show();
+                    if (ball1.getY() < 0) {
+                        balls.remove(i);
+                        i--;
+                    }
+                    for (int j = 0; j < objects.size(); j++) {
+                        if (objects.get(j) instanceof Brick) {
+                            Brick brick = (Brick) objects.get(j);
+                            if (isHit(ball1, brick)) {
+                                if(brick.hit()){
+                                    objects.remove(j);
+                                    score += multiplier*brick.getScore();
+                                }
+    
+                                balls.remove(i);
+                                i--;
+                                break;
                             }
-
-                            balls.remove(i);
-                            i--;
-                            break;
                         }
                     }
                 }
+
             }
+            else{
+                won();
+            }
+
+
         } else {
             lost();
         }
 
     }
-    // private void wone()
-    // {
-    // for (int j=0 ; j<5000 ; j++){
+    private void won()
+    {
+    for (int j=0 ; j<5000 ; j++){
 
-    // background(0);
-    // }
-    // fill(44, 181, 16);
-    // textSize(50);
-    // text("You Won!" , 100 , 250);
+        background(0);
+        }
+        fill(44, 181, 16);
+        textSize(50);
+        text("You Won!" , 100 , 250);
 
-    // fill(44, 181, 16);
-    // textSize(30);
-    // text("Lives: " , 155 , 300);
+        fill(44, 181, 16);
+        textSize(30);
+        text("Lives: " , 155 , 300);
 
-    // fill(44, 181, 16);
-    // textSize(30);
-    // text("Score: " , 150 , 340);
+        fill(44, 181, 16);
+        textSize(30);
+        text("Score: " , 150 , 340);
 
-    // fill(20, 20, 20);
-    // stroke(44, 181, 16);
-    // rect(100 ,380 ,190 ,40);
-    // fill(44, 181, 16);
-    // textSize(30);
-    // text("Menu" ,160 ,410);
+        fill(20, 20, 20);
+        stroke(44, 181, 16);
+        rect(100 ,380 ,190 ,40);
+        fill(44, 181, 16);
+        textSize(30);
+        text("Menu" ,160 ,410);
 
-    // fill(20, 20, 20);
-    // stroke(44, 181, 16);
-    // rect(100 ,440 ,190 ,40);
-    // fill(44, 181, 16);
-    // textSize(30);
-    // text("Exit" ,170 ,470);
-    // ButtonClicked4();
-    // }
+        fill(20, 20, 20);
+        stroke(44, 181, 16);
+        rect(100 ,440 ,190 ,40);
+        fill(44, 181, 16);
+        textSize(30);
+        text("Exit" ,170 ,470);
+        ButtonClicked4();
+    }
 
-    // public void ButtonClicked4() {
+    public void ButtonClicked4() {
 
-    // if (mouseX > 100 && mouseX < 290 && mouseY > 380 && mouseY < 420 &&
-    // mousePressed) {
-    // button = 0;
+    if (mouseX > 100 && mouseX < 290 && mouseY > 380 && mouseY < 420 &&
+        mousePressed) {
+        button = 0;
 
-    // }
-    // else if (mouseX > 100 && mouseX < 290 && mouseY > 440 && mouseY < 480 &&
-    // mousePressed) {
-    // button = 2;
-    // }
-    // }
+        }
+        else if (mouseX > 100 && mouseX < 290 && mouseY > 440 && mouseY < 480 &&
+        mousePressed) {
+        button = 2;
+        }
+    }
 
     public void lost() {
 
@@ -272,6 +282,8 @@ public class Game extends PApplet {
         mousePressed) {
             button = 2;
         }
+
+        mousePressed=false;
     }
 
     public void textOnPage() {
