@@ -11,7 +11,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Game extends PApplet {
-    private int chickenCount;
+    public static int chickenCount=6;;
     private int chickenRemain;
     private static int button = 0;
     private static boolean gameOver;
@@ -40,8 +40,7 @@ public class Game extends PApplet {
     private void addChicken() {
         int level = (int) (random(1, 3));
         objects.add(new Brick((int) (width * 0.085), (int) (width * 0.085), level,
-                loadImage("../images/chick" + level + ".png"), this));
-        counter++;       
+                loadImage("../images/chick" + level + ".png"), this));   
     }
 
     @Override
@@ -140,8 +139,8 @@ public class Game extends PApplet {
     private void startGame() {
 
         if (!gameOver) {
-            if(counter!=objects.size())
-            {
+           if(chickenCount>0)
+           {
                 background(0);
                 textOnPage();
     
@@ -186,13 +185,13 @@ public class Game extends PApplet {
                 }
 
             }
-            else{
-                won();
-            }
+            else if(chickenCount==0 && !gameOver){
+               won();
+           }
 
 
         } else {
-            lost();
+           lost();
         }
 
     }
