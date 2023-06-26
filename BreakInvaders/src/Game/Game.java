@@ -39,8 +39,12 @@ public class Game extends PApplet {
 
     private void addChicken() {
         int level = (int) (random(1, 3));
-        objects.add(new Brick((int) (width * 0.085), (int) (width * 0.085), level,
-                loadImage("../images/chick" + level + ".png"), this));   
+        Brick brick=new Brick((int) (width * 0.085), (int) (width * 0.085), level,
+        loadImage("../images/chick" + level + ".png"), this);
+        objects.add(brick); 
+        brick.chickenCountcheck();
+                  
+
     }
 
     @Override
