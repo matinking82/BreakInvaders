@@ -11,7 +11,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Game extends PApplet {
-    public static int chickenCount=6;;
+    public static int chickenCount=4;
     private int chickenRemain;
     private static int button = 0;
     private static boolean gameOver;
@@ -19,7 +19,6 @@ public class Game extends PApplet {
     public static int lives=3;
     public static int score;
     static int multiplier = 1;
-    public static int counter=0;
 
     public static List<IShowableObject> objects;
     List<ball> balls;
@@ -42,7 +41,8 @@ public class Game extends PApplet {
         Brick brick=new Brick((int) (width * 0.085), (int) (width * 0.085), level,
         loadImage("../images/chick" + level + ".png"), this);
         objects.add(brick); 
-        brick.chickenCountcheck();
+        chickenCount--;
+
                   
 
     }
@@ -143,7 +143,7 @@ public class Game extends PApplet {
     private void startGame() {
 
         if (!gameOver) {
-           if(chickenCount>0)
+           if(chickenCount>0||checkChickens())
            {
                 background(0);
                 textOnPage();
@@ -177,6 +177,7 @@ public class Game extends PApplet {
                             if (isHit(ball1, brick)) {
                                 if(brick.hit()){
                                     objects.remove(j);
+                                    chickenCount--;
                                     score += multiplier*brick.getScore();
                                 }
     
@@ -189,8 +190,8 @@ public class Game extends PApplet {
                 }
 
             }
-            else if(chickenCount==0 && !gameOver){
-               won();
+            else{
+                 won();
            }
 
 
@@ -199,6 +200,16 @@ public class Game extends PApplet {
         }
 
     }
+    
+    private boolean checkChickens() {
+       for(int i=0;i<objects.size();i++){
+             if(objects.get(i) instanceof Brick){
+                return true;
+             }
+       }
+       return false;
+       }
+
     private void won()
     {
     for (int j=0 ; j<5000 ; j++){
@@ -295,6 +306,9 @@ public class Game extends PApplet {
         image(pauseImage, width - 60, 10, 50, 50);
         text("Lives :"+lives, 20, 40);
         text("Score :"+score, 20, 90);
+        text("x :"+chickenCount, 20, 130);
+
+        
 
     }
 
@@ -327,6 +341,7 @@ public class Game extends PApplet {
     
     public void loseHeart(){
         lives--;
+        chickenCount--;
         if(lives<=0)
         {
             gameOver=true;

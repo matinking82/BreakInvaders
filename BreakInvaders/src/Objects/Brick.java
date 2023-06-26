@@ -98,23 +98,15 @@ public class Brick implements IShowableObject, IHittableObject {
         Blocky += 10;
         if (let && Blocky >= 2 * height) {
             let = false;
-            Game.objects.add(new Brick((int) (processing.width * 0.085), (int) (processing.width * 0.085), level, img,
-                    processing));
-              chickenCountcheck();
+            if(Game.chickenCount>0){
+                Game.objects.add(new Brick((int) (processing.width * 0.085), (int) (processing.width * 0.085), level, img,
+                processing));
+                Game.chickenCount--;
+            }
 
 
         }
     }
-
-    public void chickenCountcheck()
-    {
-        if(Blocky>=processing.height)
-        {
-                    Game.chickenCount--; 
-                    System.out.println(Game.chickenCount);  
-        }
-    }
-     
 
     public int getScore() {
         switch (level) {
