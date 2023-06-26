@@ -262,10 +262,10 @@ public class Game extends PApplet {
         textSize(35);
         text("Exit", (width / 2), 480);
         if (!checkSave) {
+            score += 1000;
             Date date = new Date();
             db.AddGameRecord(new GameRecord(date.toString(), score));
             checkSave = true;
-            score += 1000;
 
         }
         textSize(20);
@@ -343,6 +343,7 @@ public class Game extends PApplet {
         score = 0;
         chickenCount = 10;
         checkBoss = true;
+        checkSave = false;
         gameOver = false;
         objects.clear();
         balls.clear();
