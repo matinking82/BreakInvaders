@@ -3,6 +3,9 @@ package Game;
 import java.util.ArrayList;
 import java.util.List;
 
+import DbContext.interfaces.IDatabaseContext;
+import DbContext.models.GameRecord;
+import DbContext.services.DatabaseContext;
 import Objects.Brick;
 import Objects.SpaceShip;
 import Objects.ball;
@@ -19,6 +22,9 @@ public class Game extends PApplet {
     public static int lives=3;
     public static int score;
     static int multiplier = 1;
+    IDatabaseContext db=new DatabaseContext();
+
+    private boolean checkBoss=true;
 
     public static List<IShowableObject> objects;
     List<ball> balls;
@@ -37,6 +43,10 @@ public class Game extends PApplet {
     }
 
     private void addChicken() {
+
+        if (chickenCount<=0) {
+            return;
+        }
         int level = (int) (random(1, 3));
         Brick brick=new Brick((int) (width * 0.085), (int) (width * 0.085), level,
         loadImage("../images/chick" + level + ".png"), this);
@@ -53,8 +63,11 @@ public class Game extends PApplet {
             startGame();
 
         } else if (button == 2) {
-            exit();
-        } else if (button == 3) {
+            Records();
+        } else if (button == 4) {
+            pauseMenu();
+            
+
 
         } else {
             menu();
@@ -106,19 +119,14 @@ public class Game extends PApplet {
         textSize(30);
         text("Records", (width/2)-50, 390);
 
+
+
         fill(0, 0, 0);
         stroke(222, 207, 73);
         rect((width/2)-190, 420, 380, 40);
         fill(222, 207, 73);
         textSize(30);
-        text("Resume", (width/2)-50, 450);
-
-        fill(0, 0, 0);
-        stroke(222, 207, 73);
-        rect((width/2)-190, 480, 380, 40);
-        fill(222, 207, 73);
-        textSize(30);
-        text("Exit", (width/2)-30, 510);
+        text("Exit", (width/2)-30, 450);
         ButtonClicked();
     }
 
@@ -142,10 +150,10 @@ public class Game extends PApplet {
 
     private void startGame() {
 
+        background(0);
         if (!gameOver) {
            if(chickenCount>0||checkChickens())
            {
-                background(0);
                 textOnPage();
     
                 for (int i = 0; i < objects.size(); i++) {
@@ -179,6 +187,7 @@ public class Game extends PApplet {
                                     objects.remove(j);
                                     chickenCount--;
                                     score += multiplier*brick.getScore();
+                                    addChicken();
                                 }
     
                                 balls.remove(i);
@@ -191,15 +200,23 @@ public class Game extends PApplet {
 
             }
             else{
-                 won();
-           }
-
-
-        } else {
+                if (checkBoss) {
+                    
+                    objects.add(new Brick((int) (width * 0.2), (int) (width * 0.2), 4,
+                    loadImage("../images/chick" + 4 + ".png"), this));
+                    checkBoss=false;
+                }else{
+                    won();
+                }
+   
+            }
+        }
+        else {
            lost();
         }
+   }
 
-    }
+    
     
     private boolean checkChickens() {
        for(int i=0;i<objects.size();i++){
@@ -212,37 +229,52 @@ public class Game extends PApplet {
 
     private void won()
     {
-    for (int j=0 ; j<5000 ; j++){
-
         background(0);
-        }
-        fill(44, 181, 16);
+        textAlign(CENTER, CENTER);
+        background(0);
+        fill(48, 230, 60);
         textSize(50);
-        text("You Won!" , 100 , 250);
+        text("You Won!", width/2, 300);
 
-        fill(44, 181, 16);
-        textSize(30);
-        text("Lives: " , 155 , 300);
+        fill(0, 0, 0);
+        stroke(240, 0, 10);
+        rect((width/2)-190, 350, 380, 50);
+        fill(48, 230, 60);
+        textSize(35);
+        text("Menu", (width/2), 370);
 
-        fill(44, 181, 16);
-        textSize(30);
-        text("Score: " , 150 , 340);
-
-        fill(20, 20, 20);
-        stroke(44, 181, 16);
-        rect(100 ,380 ,190 ,40);
-        fill(44, 181, 16);
-        textSize(30);
-        text("Menu" ,160 ,410);
-
-        fill(20, 20, 20);
-        stroke(44, 181, 16);
-        rect(100 ,440 ,190 ,40);
-        fill(44, 181, 16);
-        textSize(30);
-        text("Exit" ,170 ,470);
+        fill(0, 0, 0);
+        stroke(240, 0, 10);
+        rect((width/2)-190, 410, 380, 50);
+        fill(48, 230, 60);
+        textSize(35);
+        text("Exit", (width/2) , 430);
+        gameOver = true;
         ButtonClicked4();
+   
+
+    } 
+    
+
+    public void textOnPage() {
+        fill(201, 14, 20);
+        textSize(35);
+        image(pauseImage, width - 60, 10, 50, 50);
+        text("Lives :"+lives, 20, 40);
+        text("Score :"+score, 20, 90);
+        ButtonClicked2();     
+
     }
+        
+    public void ButtonClicked2()
+    { 
+        if(mouseX>width-60 && mouseX<width-10 && mouseY>10 && mouseY<60 && mousePressed)
+        {
+            button=4;
+        }
+    }
+        
+    
 
     public void ButtonClicked4() {
 
@@ -300,37 +332,7 @@ public class Game extends PApplet {
         mousePressed=false;
     }
 
-    public void textOnPage() {
-        fill(201, 14, 20);
-        textSize(35);
-        image(pauseImage, width - 60, 10, 50, 50);
-        text("Lives :"+lives, 20, 40);
-        text("Score :"+score, 20, 90);
-        text("x :"+chickenCount, 20, 130);
 
-        
-
-    }
-
-    // public void pause()
-    // {
-    // fill(89, 32, 11);
-    // stroke(0 ,200 ,100);
-    // strokeWeight(3);
-    // rect(30 ,655 ,150 ,30);
-    // fill(0 ,200 ,100);
-    // textSize(30);
-    // text("Retuern" ,55 ,680);
-    // ButtonClicked2();
-    // }
-    // public void ButtonClicked2()
-    // {
-    // if(mouseX>30 && mouseX<180 && mouseY>655 && mouseY<685&& mousePressed)
-    // {
-    // objects.clear();
-    // button=0;
-    // }
-    // }
 
     private boolean isHit(ball ball1, Brick brick) {
         return (ball1.getEllipseX() >= brick.getBlockx() - ball1.getEllipseWidth()) &&
@@ -348,5 +350,72 @@ public class Game extends PApplet {
         }
 
     }
+
+    public void Records()
+    {
+        List<GameRecord> list=db.getTopGameRecords();
+        for(GameRecord gameRecord : list)
+        {
+            fill(240, 0, 10);
+            textSize(35);
+            text("Date :"+gameRecord.getDate(), (width/2) , 430);
+
+            fill(240, 0, 10);
+            textSize(35);
+            text("Score :"+gameRecord.getScore(), (width/2) , 500);
+
+        }
+
+    }
+
+    public void pauseMenu()
+    {
+
+        fill(0, 0, 0);
+        stroke(222, 207, 73);
+        rect((width/2)-190, 360, 380, 40);
+        fill(222, 207, 73);
+        textSize(30);
+        text("Records", (width/2)-50, 390);
+
+
+
+        fill(0, 0, 0);
+        stroke(222, 207, 73);
+        rect((width/2)-190, 420, 380, 40);
+        fill(222, 207, 73);
+        textSize(30);
+        text("Resume", (width/2)-50, 450);
+
+        
+
+        fill(0, 0, 0);
+        stroke(222, 207, 73);
+        rect((width/2)-190, 480, 380, 40);
+        fill(222, 207, 73);
+        textSize(30);
+        text("Exit", (width/2)-30, 510);
+        ButtonClicked5();
+
+    }
+
+    public void ButtonClicked5() {
+
+
+        if (mouseX > (width/2)-190 && mouseX < (width/2)+190 && mouseY > 360 && mouseY < 400 && mousePressed) {
+            button = 3;
+        } else if (mouseX > (width/2)-190 && mouseX < (width/2)+190 && mouseY > 420 && mouseY < 460 && mousePressed) {
+            button = 2;
+        } else if (mouseX > (width/2)-190 && mouseX < (width/2)+190 && mouseY > 480 && mouseY < 520 && mousePressed) {
+            exit();
+
+        } else {
+            button = 0;
+
+        }
+        mousePressed = false;
+    }
+
+    
 
 }
