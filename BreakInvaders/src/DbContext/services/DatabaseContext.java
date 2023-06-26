@@ -23,7 +23,7 @@ public class DatabaseContext implements IDatabaseContext {
         }
         try {
             // db parameters
-            String url = "jdbc:sqlite:sqlite/db/breakInvaders.db";
+            String url = "jdbc:sqlite:BreakInvaders/sqlite/db/breakInvaders.db";
             // create a connection to the database
             connection = DriverManager.getConnection(url);
 
