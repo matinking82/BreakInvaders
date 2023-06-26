@@ -11,7 +11,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Game extends PApplet {
-    public static int chickenCount=4;
+    public static int chickenCount=10;
     private int chickenRemain;
     private static int button = 0;
     private static boolean gameOver;
