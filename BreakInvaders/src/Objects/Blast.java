@@ -5,6 +5,7 @@ import processing.core.PApplet;
 
 import java.util.Random;
 
+import images.Images;
 import interfaces.ICollectibleItem;
 
 
@@ -26,7 +27,7 @@ public class Blast implements IShowableObject,ICollectibleItem{
 
      @Override
     public void show() {
-        processing.image(processing.loadImage("../images/Blast.png"), blastX, blastY, blastHeight, blastWidth);
+        processing.image(Images.Blast, blastX, blastY, blastHeight, blastWidth);
     }
 
     @Override

@@ -1,7 +1,9 @@
 package Objects;
 
+import images.Images;
 import interfaces.IShowableObject;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class ball implements IShowableObject {
     PApplet processing;
@@ -9,7 +11,7 @@ public class ball implements IShowableObject {
     private int ellipseY;
     private int ellipseWidth;
     private int ellipseHeight;
-    int i = 0;
+    int i = 1;
 
     public ball(int ellipseX, int ellipseY, int ellipseHeight, int ellipseWidth, PApplet processing) {
         this.ellipseX = ellipseX;
@@ -21,9 +23,28 @@ public class ball implements IShowableObject {
 
     @Override
     public void show() {
-        processing.image(processing.loadImage("../images/bullet/" + Integer.toString((i % 8) / 2 + 1) + ".png"),
-                ellipseX, ellipseY, ellipseWidth, ellipseHeight);
-        i++;
+
+        PImage img = null;
+        switch (i) {
+            case 1:
+                img = Images.Bullet1;
+                i++;
+                break;
+            case 2:
+                img = Images.Bullet2;
+                i++;
+                break;
+            case 3:
+                img = Images.Bullet3;
+                i++;
+                break;
+            case 4:
+                img = Images.Bullet4;
+                i = 1;
+                break;
+        }
+
+        processing.image(img, ellipseX, ellipseY, ellipseWidth, ellipseHeight);
     }
 
     public int getY() {

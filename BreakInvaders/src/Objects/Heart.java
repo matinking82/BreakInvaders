@@ -2,6 +2,7 @@ package Objects;
 
 import java.util.Random;
 
+import images.Images;
 import interfaces.ICollectibleItem;
 import interfaces.IShowableObject;
 import processing.core.PApplet;
@@ -24,7 +25,7 @@ public class Heart implements IShowableObject , ICollectibleItem {
 
     @Override
     public void show() {
-        processing.image(processing.loadImage("../images/Heart.png") , heartX , heartY  ,width , height);
+        processing.image(Images.Heart , heartX , heartY  ,width , height);
         
     }
 

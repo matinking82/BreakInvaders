@@ -10,6 +10,7 @@ import DbContext.services.DatabaseContext;
 import Objects.Brick;
 import Objects.SpaceShip;
 import Objects.ball;
+import images.Images;
 import interfaces.IShowableObject;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -18,7 +19,6 @@ public class Game extends PApplet {
     public static int chickenCount = 10;
     private static int button = 0;
     private static boolean gameOver;
-    private PImage pauseImage;
     public static int lives = 3;
     public static int score;
     static int multiplier = 1;
@@ -34,8 +34,21 @@ public class Game extends PApplet {
         objects = new ArrayList<IShowableObject>();
         balls = new ArrayList<>();
 
-        // noCursor();
-        pauseImage = loadImage("../images/pause.png");
+        Images.Pause = loadImage("../images/pause.png");
+        Images.Blast = loadImage("../images/Blast.png");
+        Images.Heart = loadImage("../images/heart.png");
+        Images.DoubleB = loadImage("../images/DoubleB.png");
+        Images.Score = loadImage("../images/DoubleScore.png");
+        Images.Shield = loadImage("../images/shield.png");
+        Images.SpaceShip = loadImage("../images/sps.png");
+        Images.chicken1 = loadImage("../images/chick1.png");
+        Images.chicken2 = loadImage("../images/chick2.png");
+        Images.chicken3 = loadImage("../images/chick3.png");
+        Images.chicken4 = loadImage("../images/chick4.png");
+        Images.Bullet1 = loadImage("../images/bullet/1.png");
+        Images.Bullet2 = loadImage("../images/bullet/2.png");
+        Images.Bullet3 = loadImage("../images/bullet/3.png");
+        Images.Bullet4 = loadImage("../images/bullet/4.png");
     }
 
     private void addChicken() {
@@ -44,11 +57,27 @@ public class Game extends PApplet {
             return;
         }
         int level = (int) (random(1, 3));
+        
         Brick brick = new Brick((int) (width * 0.085), (int) (width * 0.085), level,
-                loadImage("../images/chick" + level + ".png"), this);
+                getChickByLevel(level), this);
         objects.add(brick);
         chickenCount--;
 
+    }
+
+    private PImage getChickByLevel(int level) {
+        switch (level) {
+            case 1:
+                return Images.chicken1;
+            case 2:
+                return Images.chicken2;
+            case 3:
+                return Images.chicken3;
+            case 4:
+                return Images.chicken4;
+        }
+
+        return Images.chicken1;
     }
 
     @Override
@@ -103,14 +132,14 @@ public class Game extends PApplet {
         rect((width / 2) - 190, 300, 380, 40);
         fill(222, 207, 73);
         textSize(30);
-        text("Start Game", (width / 2) , 320);
+        text("Start Game", (width / 2), 320);
 
         fill(0, 0, 0);
         stroke(222, 207, 73);
         rect((width / 2) - 190, 360, 380, 40);
         fill(222, 207, 73);
         textSize(30);
-        text("Records", (width / 2) , 375);
+        text("Records", (width / 2), 375);
 
         fill(0, 0, 0);
         stroke(222, 207, 73);
@@ -191,7 +220,7 @@ public class Game extends PApplet {
                 if (checkBoss) {
 
                     objects.add(new Brick((int) (width * 0.2), (int) (width * 0.2), 4,
-                            loadImage("../images/chick" + 4 + ".png"), this));
+                            Images.chicken4, this));
                     checkBoss = false;
                 } else {
                     won();
@@ -219,7 +248,6 @@ public class Game extends PApplet {
         textSize(50);
         text("You Won!", width / 2, 300);
 
-
         fill(0, 0, 0);
         stroke(48, 230, 60);
         rect((width / 2) - 190, 400, 380, 50);
@@ -237,7 +265,7 @@ public class Game extends PApplet {
             Date date = new Date();
             db.AddGameRecord(new GameRecord(date.toString(), score));
             checkSave = true;
-            score+=1000;
+            score += 1000;
 
         }
         textSize(20);
@@ -250,7 +278,7 @@ public class Game extends PApplet {
     public void textOnPage() {
         fill(201, 14, 20);
         textSize(35);
-        image(pauseImage, width - 60, 10, 50, 50);
+        image(Images.Pause, width - 60, 10, 50, 50);
         text("Lives :" + lives, 20, 40);
         text("Score :" + score, 20, 90);
         ButtonClicked2();
@@ -361,14 +389,14 @@ public class Game extends PApplet {
 
         fill(240, 0, 10);
         textSize(30);
-        text("top 10 Records", width/2, 50);
-        int i=1;
+        text("top 10 Records", width / 2, 50);
+        int i = 1;
 
         for (GameRecord gameRecord : list) {
 
             fill(240, 0, 10);
             textSize(30);
-            text(i+" - Date :" + gameRecord.getDate(), (width / 2) - 300, 80 + fixSize);
+            text(i + " - Date :" + gameRecord.getDate(), (width / 2) - 300, 80 + fixSize);
 
             fill(240, 0, 10);
             textSize(30);

@@ -5,6 +5,7 @@ import processing.core.PApplet;
 
 import java.util.Random;
 
+import images.Images;
 import interfaces.ICollectibleItem;
 
 public class Sheild implements IShowableObject, ICollectibleItem {
@@ -27,7 +28,7 @@ public class Sheild implements IShowableObject, ICollectibleItem {
 
     @Override
     public void show() {
-        processing.image(processing.loadImage("../images/Shield.png"), sheildX, sheildY, sheildwidth,
+        processing.image(Images.Shield, sheildX, sheildY, sheildwidth,
                 sheildheight);
     }
 

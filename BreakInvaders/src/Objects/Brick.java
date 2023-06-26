@@ -5,7 +5,6 @@ import java.util.Random;
 import Game.Game;
 import interfaces.IHittableObject;
 import interfaces.IShowableObject;
-import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Brick implements IShowableObject, IHittableObject {

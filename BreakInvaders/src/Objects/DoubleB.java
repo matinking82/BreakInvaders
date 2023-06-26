@@ -5,6 +5,7 @@ import processing.core.PApplet;
 
 import java.util.Random;
 
+import images.Images;
 import interfaces.ICollectibleItem;
 
 public class DoubleB implements IShowableObject,ICollectibleItem{
@@ -24,7 +25,7 @@ public class DoubleB implements IShowableObject,ICollectibleItem{
     }
     @Override
     public void show() {
-        processing.image(processing.loadImage("../images/DoubleB.png"), doubleBX, doubleBY, doubleBHeight, doubleBWidth);
+        processing.image(Images.DoubleB, doubleBX, doubleBY, doubleBHeight, doubleBWidth);
 
     }
     @Override
