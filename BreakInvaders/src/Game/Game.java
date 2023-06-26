@@ -1,6 +1,7 @@
 package Game;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import DbContext.interfaces.IDatabaseContext;
@@ -14,17 +15,16 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Game extends PApplet {
-    public static int chickenCount=10;
-    private int chickenRemain;
+    public static int chickenCount = 10;
     private static int button = 0;
     private static boolean gameOver;
     private PImage pauseImage;
-    public static int lives=3;
+    public static int lives = 3;
     public static int score;
     static int multiplier = 1;
-    IDatabaseContext db=new DatabaseContext();
-
-    private boolean checkBoss=true;
+    IDatabaseContext db = new DatabaseContext();
+    private boolean checkSave = false;
+    private boolean checkBoss = true;
 
     public static List<IShowableObject> objects;
     List<ball> balls;
@@ -33,10 +33,6 @@ public class Game extends PApplet {
     public void setup() {
         objects = new ArrayList<IShowableObject>();
         balls = new ArrayList<>();
-        objects.add(new SpaceShip((int) (width * 0.1), (int) (width * 0.1), this));
-        // addChicken();
-        addChicken();
-        addChicken();
 
         // noCursor();
         pauseImage = loadImage("../images/pause.png");
@@ -44,16 +40,14 @@ public class Game extends PApplet {
 
     private void addChicken() {
 
-        if (chickenCount<=0) {
+        if (chickenCount <= 0) {
             return;
         }
         int level = (int) (random(1, 3));
-        Brick brick=new Brick((int) (width * 0.085), (int) (width * 0.085), level,
-        loadImage("../images/chick" + level + ".png"), this);
-        objects.add(brick); 
+        Brick brick = new Brick((int) (width * 0.085), (int) (width * 0.085), level,
+                loadImage("../images/chick" + level + ".png"), this);
+        objects.add(brick);
         chickenCount--;
-
-                  
 
     }
 
@@ -66,8 +60,6 @@ public class Game extends PApplet {
             Records();
         } else if (button == 4) {
             pauseMenu();
-            
-
 
         } else {
             menu();
@@ -99,48 +91,45 @@ public class Game extends PApplet {
     }
 
     private void menu() {
-        gameOver = false;
+        textAlign(CENTER, CENTER);
+
         background(0);
         fill(122, 150, 235);
         textSize(60);
-        text("BreakInvaders", (width/2)-200, 120);
+        text("BreakInvaders", (width / 2), 120);
 
         fill(0, 0, 0);
         stroke(222, 207, 73);
-        rect((width/2)-190, 300, 380, 40);
+        rect((width / 2) - 190, 300, 380, 40);
         fill(222, 207, 73);
         textSize(30);
-        text("Start Game", (width/2)-70, 330);
+        text("Start Game", (width / 2) , 320);
 
         fill(0, 0, 0);
         stroke(222, 207, 73);
-        rect((width/2)-190, 360, 380, 40);
+        rect((width / 2) - 190, 360, 380, 40);
         fill(222, 207, 73);
         textSize(30);
-        text("Records", (width/2)-50, 390);
-
-
+        text("Records", (width / 2) , 375);
 
         fill(0, 0, 0);
         stroke(222, 207, 73);
-        rect((width/2)-190, 420, 380, 40);
+        rect((width / 2) - 190, 420, 380, 40);
         fill(222, 207, 73);
         textSize(30);
-        text("Exit", (width/2)-30, 450);
+        text("Exit", (width / 2), 435);
         ButtonClicked();
     }
 
     public void ButtonClicked() {
 
         if (mouseX > 580 && mouseX < 960 && mouseY > 300 && mouseY < 340 && mousePressed) {
+            resetData();
             button = 1;
         } else if (mouseX > 580 && mouseX < 960 && mouseY > 360 && mouseY < 400 && mousePressed) {
-            button = 3;
-        } else if (mouseX > 580 && mouseX < 960 && mouseY > 420 && mouseY < 460 && mousePressed) {
             button = 2;
-        } else if (mouseX > 580 && mouseX < 960 && mouseY > 480 && mouseY < 520 && mousePressed) {
+        } else if (mouseX > 580 && mouseX < 960 && mouseY > 420 && mouseY < 460 && mousePressed) {
             exit();
-
         } else {
             button = 0;
 
@@ -152,10 +141,9 @@ public class Game extends PApplet {
 
         background(0);
         if (!gameOver) {
-           if(chickenCount>0||checkChickens())
-           {
+            if (chickenCount > 0 || checkChickens()) {
                 textOnPage();
-    
+
                 for (int i = 0; i < objects.size(); i++) {
                     IShowableObject obj = objects.get(i);
                     if (obj == null) {
@@ -183,13 +171,13 @@ public class Game extends PApplet {
                         if (objects.get(j) instanceof Brick) {
                             Brick brick = (Brick) objects.get(j);
                             if (isHit(ball1, brick)) {
-                                if(brick.hit()){
+                                if (brick.hit()) {
                                     objects.remove(j);
                                     chickenCount--;
-                                    score += multiplier*brick.getScore();
+                                    score += multiplier * brick.getScore();
                                     addChicken();
                                 }
-    
+
                                 balls.remove(i);
                                 i--;
                                 break;
@@ -198,141 +186,157 @@ public class Game extends PApplet {
                     }
                 }
 
-            }
-            else{
+            } else {
+
                 if (checkBoss) {
-                    
+
                     objects.add(new Brick((int) (width * 0.2), (int) (width * 0.2), 4,
-                    loadImage("../images/chick" + 4 + ".png"), this));
-                    checkBoss=false;
-                }else{
+                            loadImage("../images/chick" + 4 + ".png"), this));
+                    checkBoss = false;
+                } else {
                     won();
                 }
-   
+            }
+        } else {
+            lost();
+        }
+    }
+
+    private boolean checkChickens() {
+        for (int i = 0; i < objects.size(); i++) {
+            if (objects.get(i) instanceof Brick) {
+                return true;
             }
         }
-        else {
-           lost();
-        }
-   }
+        return false;
+    }
 
-    
-    
-    private boolean checkChickens() {
-       for(int i=0;i<objects.size();i++){
-             if(objects.get(i) instanceof Brick){
-                return true;
-             }
-       }
-       return false;
-       }
-
-    private void won()
-    {
+    private void won() {
         background(0);
         textAlign(CENTER, CENTER);
         background(0);
         fill(48, 230, 60);
         textSize(50);
-        text("You Won!", width/2, 300);
+        text("You Won!", width / 2, 300);
+
 
         fill(0, 0, 0);
-        stroke(240, 0, 10);
-        rect((width/2)-190, 350, 380, 50);
+        stroke(48, 230, 60);
+        rect((width / 2) - 190, 400, 380, 50);
         fill(48, 230, 60);
         textSize(35);
-        text("Menu", (width/2), 370);
+        text("Menu", (width / 2), 420);
 
         fill(0, 0, 0);
-        stroke(240, 0, 10);
-        rect((width/2)-190, 410, 380, 50);
+        stroke(48, 230, 60);
+        rect((width / 2) - 190, 460, 380, 50);
         fill(48, 230, 60);
         textSize(35);
-        text("Exit", (width/2) , 430);
-        gameOver = true;
+        text("Exit", (width / 2), 480);
+        if (!checkSave) {
+            Date date = new Date();
+            db.AddGameRecord(new GameRecord(date.toString(), score));
+            checkSave = true;
+            score+=1000;
+
+        }
+        textSize(20);
+        text("Lives :" + lives, (width / 2) - 100, 350);
+        text("Score :" + score, (width / 2) + 100, 350);
         ButtonClicked4();
-   
 
-    } 
-    
+    }
 
     public void textOnPage() {
         fill(201, 14, 20);
         textSize(35);
         image(pauseImage, width - 60, 10, 50, 50);
-        text("Lives :"+lives, 20, 40);
-        text("Score :"+score, 20, 90);
-        ButtonClicked2();     
+        text("Lives :" + lives, 20, 40);
+        text("Score :" + score, 20, 90);
+        ButtonClicked2();
 
     }
-        
-    public void ButtonClicked2()
-    { 
-        if(mouseX>width-60 && mouseX<width-10 && mouseY>10 && mouseY<60 && mousePressed)
-        {
-            button=4;
+
+    public void ButtonClicked2() {
+        if (mouseX > width - 60 && mouseX < width - 10 && mouseY > 10 && mouseY < 60 && mousePressed) {
+            button = 4;
         }
+        mousePressed = false;
     }
-        
-    
 
     public void ButtonClicked4() {
 
-    if (mouseX > 100 && mouseX < 290 && mouseY > 380 && mouseY < 420 &&
-        mousePressed) {
-        button = 0;
+        if (mouseX > (width / 2) - 190 && mouseX < (width / 2) + 190 && mouseY > 400 && mouseY < 450 &&
+                mousePressed) {
+            button = 0;
 
+        } else if (mouseX > (width / 2) - 190 && mouseX < (width / 2) + 190 && mouseY > 460 && mouseY < 510 &&
+                mousePressed) {
+            exit();
         }
-        else if (mouseX > 100 && mouseX < 290 && mouseY > 440 && mouseY < 480 &&
-        mousePressed) {
-        button = 2;
-        }
+        mousePressed = false;
     }
 
     public void lost() {
 
-        for (int j = 0; j < 5000; j++) {
-
-            background(0);
-        }
+        background(0);
         textAlign(CENTER, CENTER);
         background(0);
         fill(240, 0, 10);
         textSize(50);
-        text("GAME OVER!", width/2, 300);
+        text("GAME OVER!", width / 2, 300);
 
         fill(0, 0, 0);
         stroke(240, 0, 10);
-        rect((width/2)-190, 350, 380, 50);
+        rect((width / 2) - 190, 350, 380, 50);
         fill(240, 0, 10);
         textSize(35);
-        text("Menu", (width/2), 370);
+        text("Menu", (width / 2), 370);
 
         fill(0, 0, 0);
         stroke(240, 0, 10);
-        rect((width/2)-190, 410, 380, 50);
+        rect((width / 2) - 190, 410, 380, 50);
         fill(240, 0, 10);
         textSize(35);
-        text("Exit", (width/2) , 430);
-        gameOver = true;
+        text("Exit", (width / 2), 430);
+        // gameOver = true;
+
+        if (!checkSave) {
+            Date date = new Date();
+            db.AddGameRecord(new GameRecord(date.toString(), score));
+            checkSave = true;
+        }
         ButtonClicked3();
 
     }
-    public void ButtonClicked3() {
-        if (mouseX >(width/2)-190  && mouseX <(width/2)+190  && mouseY > 350 && mouseY < 400 &&
-        mousePressed) {
 
-             button = 0;
-        }
-        else if (mouseX > (width/2)-190 && mouseX < (width/2)+190 && mouseY > 410 && mouseY < 460 &&
-        mousePressed) {
-            button = 2;
-        }
+    private void resetData() {
+        lives = 3;
+        score = 0;
+        chickenCount = 10;
+        checkBoss = true;
+        gameOver = false;
+        objects.clear();
+        balls.clear();
+        objects.add(new SpaceShip((int) (width * 0.1), (int) (width * 0.1), this));
+        // addChicken();
+        addChicken();
+        addChicken();
 
-        mousePressed=false;
     }
 
+    public void ButtonClicked3() {
 
+        if (mouseX > (width / 2) - 190 && mouseX < (width / 2) + 190 && mouseY > 350 && mouseY < 400 &&
+                mousePressed) {
+            button = 0;
+        } else if (mouseX > (width / 2) - 190 && mouseX < (width / 2) + 190 && mouseY > 410 && mouseY < 460 &&
+                mousePressed) {
+            exit();
+
+        }
+        mousePressed = false;
+    }
 
     private boolean isHit(ball ball1, Brick brick) {
         return (ball1.getEllipseX() >= brick.getBlockx() - ball1.getEllipseWidth()) &&
@@ -340,82 +344,91 @@ public class Game extends PApplet {
                 (ball1.getY() >= brick.getY() - ball1.getEllipseHeight())
                 && (ball1.getY() <= brick.getY() + brick.getHeight());
     }
-    
-    public void loseHeart(){
+
+    public void loseHeart() {
         lives--;
         chickenCount--;
-        if(lives<=0)
-        {
-            gameOver=true;
+        if (lives <= 0) {
+            gameOver = true;
         }
 
     }
 
-    public void Records()
-    {
-        List<GameRecord> list=db.getTopGameRecords();
-        for(GameRecord gameRecord : list)
-        {
-            fill(240, 0, 10);
-            textSize(35);
-            text("Date :"+gameRecord.getDate(), (width/2) , 430);
+    public void Records() {
+        background(0);
+        List<GameRecord> list = db.getTopGameRecords();
+        int fixSize = 15;
+
+        fill(240, 0, 10);
+        textSize(30);
+        text("top 10 Records", width/2, 50);
+        int i=1;
+
+        for (GameRecord gameRecord : list) {
 
             fill(240, 0, 10);
-            textSize(35);
-            text("Score :"+gameRecord.getScore(), (width/2) , 500);
+            textSize(30);
+            text(i+" - Date :" + gameRecord.getDate(), (width / 2) - 300, 80 + fixSize);
+
+            fill(240, 0, 10);
+            textSize(30);
+            text(" Score :" + gameRecord.getScore(), (width / 2) + 300, 80 + fixSize);
+            i++;
+
+            fixSize += 50;
 
         }
 
+        if (mousePressed) {
+            button = 0;
+
+        }
+        mousePressed = false;
+
     }
 
-    public void pauseMenu()
-    {
+    public void pauseMenu() {
 
         fill(0, 0, 0);
         stroke(222, 207, 73);
-        rect((width/2)-190, 360, 380, 40);
+        rect((width / 2) - 190, 360, 380, 40);
         fill(222, 207, 73);
         textSize(30);
-        text("Records", (width/2)-50, 390);
-
-
+        text("Records", (width / 2) - 50, 390);
 
         fill(0, 0, 0);
         stroke(222, 207, 73);
-        rect((width/2)-190, 420, 380, 40);
+        rect((width / 2) - 190, 420, 380, 40);
         fill(222, 207, 73);
         textSize(30);
-        text("Resume", (width/2)-50, 450);
-
-        
+        text("Resume", (width / 2) - 50, 450);
 
         fill(0, 0, 0);
         stroke(222, 207, 73);
-        rect((width/2)-190, 480, 380, 40);
+        rect((width / 2) - 190, 480, 380, 40);
         fill(222, 207, 73);
         textSize(30);
-        text("Exit", (width/2)-30, 510);
+        text("Exit", (width / 2) - 30, 510);
         ButtonClicked5();
 
     }
 
     public void ButtonClicked5() {
 
-
-        if (mouseX > (width/2)-190 && mouseX < (width/2)+190 && mouseY > 360 && mouseY < 400 && mousePressed) {
-            button = 3;
-        } else if (mouseX > (width/2)-190 && mouseX < (width/2)+190 && mouseY > 420 && mouseY < 460 && mousePressed) {
+        if (mouseX > (width / 2) - 190 && mouseX < (width / 2) + 190 && mouseY > 360 && mouseY < 400 && mousePressed) {
             button = 2;
-        } else if (mouseX > (width/2)-190 && mouseX < (width/2)+190 && mouseY > 480 && mouseY < 520 && mousePressed) {
+        } else if (mouseX > (width / 2) - 190 && mouseX < (width / 2) + 190 && mouseY > 420 && mouseY < 460
+                && mousePressed) {
+            button = 1;
+        } else if (mouseX > (width / 2) - 190 && mouseX < (width / 2) + 190 && mouseY > 480 && mouseY < 520
+                && mousePressed) {
             exit();
 
         } else {
-            button = 0;
+            button = 4;
 
         }
         mousePressed = false;
     }
-
-    
 
 }
