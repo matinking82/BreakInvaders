@@ -341,9 +341,9 @@ public class Game extends PApplet {
         fill(201, 14, 20);
         textSize(35);
         image(Images.Pause, width - 60, 10, 50, 50);
-        text("Lives :" + lives, 20, 40);
-        text("Shield :" + Shield, 20, 90);
-        text("Score :" + score, 20, 140);
+        text("Lives :" + lives, 120, 40);
+        text("Shield :" + Shield, 120, 90);
+        text("Score :" + score, 120, 140);
         ButtonClicked2();
 
     }
