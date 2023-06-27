@@ -8,37 +8,36 @@ import java.util.Random;
 import images.Images;
 import interfaces.ICollectibleItem;
 
-
-public class Blast implements IShowableObject,ICollectibleItem{
+public class Blast implements IShowableObject, ICollectibleItem {
     private int blastX;
     private int blastY;
     private int blastHeight;
     private int blastWidth;
     PApplet processing;
 
-
-    public Blast(int blastX,int blastY,int blastHeight,int blastWidth,PApplet processing){
-     this.blastHeight=blastHeight;
-     this.blastWidth=blastWidth;
-     this.processing=processing;
-     blastY = -blastHeight;
-     blastX = randomNum(10, processing.width-blastWidth-10);
+    public Blast(int blastX, int blastY, int blastHeight, int blastWidth, PApplet processing) {
+        this.blastHeight = blastHeight;
+        this.blastWidth = blastWidth;
+        this.processing = processing;
+        this.blastY = blastY;
+        this.blastX = blastX;
     }
 
-     @Override
+    @Override
     public void show() {
         processing.image(Images.Blast, blastX, blastY, blastHeight, blastWidth);
     }
 
     @Override
     public void Collect() {
-    
+
     }
 
     @Override
     public void move() {
-        this.blastY+=10;
+        this.blastY += 10;
     }
+
     public int getBlastX() {
         return this.blastX;
     }
@@ -69,9 +68,10 @@ public class Blast implements IShowableObject,ICollectibleItem{
 
     public void setBlastWidth(int blastWidth) {
         this.blastWidth = blastWidth;
-    } 
+    }
+
     private int randomNum(int start, int end) {
         Random random = new Random();
         return random.nextInt(end - start + 1) + start;
-    } 
+    }
 }

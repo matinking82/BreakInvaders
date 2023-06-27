@@ -7,32 +7,32 @@ import interfaces.ICollectibleItem;
 import interfaces.IShowableObject;
 import processing.core.PApplet;
 
-public class Heart implements IShowableObject , ICollectibleItem {
+public class Heart implements IShowableObject, ICollectibleItem {
     PApplet processing;
     private int width;
     private int height;
     private int heartX;
     private int heartY;
 
-    public Heart(int width , int height , PApplet processing)
-    {
-        this.processing=processing;
-        this.width=width;
-        this.height=height;
-        heartY-=height;
-        heartX=randomNum(10, processing.width-width-10);
+    public Heart(int x, int y, int width, int height, PApplet processing) {
+        this.processing = processing;
+        this.width = width;
+        this.height = height;
+        heartY = y;
+        heartX = x;
     }
 
     @Override
     public void show() {
-        processing.image(Images.Heart , heartX , heartY  ,width , height);
-        
+        processing.image(Images.Heart, heartX, heartY, width, height);
+
     }
 
     @Override
     public void Collect() {
-        
+
     }
+
     public int getWidth() {
         return width;
     }
@@ -67,16 +67,13 @@ public class Heart implements IShowableObject , ICollectibleItem {
 
     @Override
     public void move() {
-        heartY+=10;
+        heartY += 10;
 
     }
+
     private int randomNum(int start, int end) {
         Random random = new Random();
         return random.nextInt(end - start + 1) + start;
     }
 
-
-
-    
-    
 }

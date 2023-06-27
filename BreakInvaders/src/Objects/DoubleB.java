@@ -20,8 +20,8 @@ public class DoubleB implements IShowableObject,ICollectibleItem{
         this.doubleBHeight=doubleBHeight;
         this.doubleBWidth=doubleBWidth;
         this.processing=processing;
-        doubleBY = -doubleBHeight;
-        doubleBX = randomNum(10, processing.width-doubleBWidth-10);
+        this.doubleBY = doubleBY;
+        this.doubleBX = doubleBX;
     }
     @Override
     public void show() {

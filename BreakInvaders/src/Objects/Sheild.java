@@ -16,13 +16,12 @@ public class Sheild implements IShowableObject, ICollectibleItem {
     private int sheildY;
     static boolean sheildAffect = false;
 
-    public Sheild(int sheildheight, int sheildwidth, PApplet processing) {
+    public Sheild(int x, int y, int sheildheight, int sheildwidth, PApplet processing) {
         this.sheildheight = sheildheight;
         this.sheildwidth = sheildwidth;
         this.processing = processing;
-        sheildY-=sheildheight;
-        sheildX = randomNum(10, processing.width-sheildwidth-10);
-
+        sheildY = y;
+        sheildX = x;
 
     }
 
@@ -71,8 +70,9 @@ public class Sheild implements IShowableObject, ICollectibleItem {
 
     @Override
     public void move() {
-    this.sheildY+=10;
+        this.sheildY += 10;
     }
+
     private int randomNum(int start, int end) {
         Random random = new Random();
         return random.nextInt(end - start + 1) + start;
