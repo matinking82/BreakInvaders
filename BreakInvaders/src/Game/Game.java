@@ -23,7 +23,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Game extends PApplet {
-    public static int chickenCount = 10;
+    public static int chickenCount = 50;
     private static int button = 0;
     private static boolean gameOver;
     public static int lives = 3;
@@ -59,7 +59,7 @@ public class Game extends PApplet {
         Images.Bullet4 = loadImage("../images/bullet/4.png");
     }
 
-    private void addChicken() {
+    public void addChicken() {
 
         if (chickenCount <= 0) {
             return;
@@ -220,6 +220,7 @@ public class Game extends PApplet {
                     if (ball1.getY() < 0) {
                         balls.remove(ball1);
                         i--;
+                        continue;
                     }
                     for (int j = 0; j < objects.size(); j++) {
                         if (objects.get(j) instanceof Brick) {
@@ -229,8 +230,8 @@ public class Game extends PApplet {
                                 DoubleBullet = DoubleBullet + 1 - loop;
                                 for (int k = 0; k < loop; k++) {
                                     if (brick.hit()) {
-                                        objects.remove(j);
-                                        chickenCount--;
+                                        objects.remove(brick);
+                                        j--;
                                         score += brick.getScore();
                                         addItem(brick.getBlockx(), brick.getY());
                                         addChicken();
@@ -252,6 +253,8 @@ public class Game extends PApplet {
 
                     objects.add(new Brick((int) (width * 0.2), (int) (width * 0.2), 4,
                             Images.chicken4, this));
+                    objects.add(new Brick((int) (width * 0.2), (int) (width * 0.2), 4,
+                            Images.chicken4, this));
                     checkBoss = false;
                 } else {
                     won();
@@ -263,7 +266,7 @@ public class Game extends PApplet {
     }
 
     private void addItem(int x, int y) {
-        int i = randomNum(1, 15);
+        int i = randomNum(1, 10);
         switch (i) {
             case 1: {
                 objects.add(new Heart(x, y, (int) (width * 0.05), (int) (width * 0.05), this));
@@ -401,7 +404,7 @@ public class Game extends PApplet {
     private void resetData() {
         lives = 3;
         score = 0;
-        chickenCount = 10;
+        chickenCount = 50;
         checkBoss = true;
         checkSave = false;
         gameOver = false;
@@ -440,7 +443,6 @@ public class Game extends PApplet {
         } else {
             Shield--;
         }
-        chickenCount--;
         if (lives <= 0) {
             gameOver = true;
         }

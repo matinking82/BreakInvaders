@@ -38,7 +38,7 @@ public class Brick implements IShowableObject, IHittableObject {
                 break;
 
             case 4:
-                this.heart = 10;
+                this.heart = 20;
                 break;
 
             default:
@@ -97,26 +97,20 @@ public class Brick implements IShowableObject, IHittableObject {
         Blocky += 3;
         if (let && Blocky >= 2 * height) {
             let = false;
-            if(Game.chickenCount>0){
-                Game.objects.add(new Brick((int) (processing.width * 0.085), (int) (processing.width * 0.085), level, img,
-                processing));
-                Game.chickenCount--;
-            }
-
-
+            processing.addChicken();
         }
     }
 
     public int getScore() {
         switch (level) {
             case 1:
-                return 10;
-            case 2:
                 return 50;
-            case 3:
+            case 2:
                 return 100;
+            case 3:
+                return 500;
             case 4:
-                return 1000;
+                return 2000;
             default:
                 return 0;
         }
