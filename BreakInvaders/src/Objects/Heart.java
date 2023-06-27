@@ -49,7 +49,7 @@ public class Heart implements IShowableObject, ICollectibleItem {
         this.height = height;
     }
 
-    public int getHeartX() {
+    public int getX() {
         return heartX;
     }
 

@@ -54,7 +54,7 @@ public class DoubleScore implements ICollectibleItem, IShowableObject {
         this.height = height;
     }
 
-    public int getScoreX() {
+    public int getX() {
         return scoreX;
     }
 

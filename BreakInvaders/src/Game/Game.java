@@ -3,14 +3,21 @@ package Game;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import DbContext.interfaces.IDatabaseContext;
 import DbContext.models.GameRecord;
 import DbContext.services.DatabaseContext;
+import Objects.Blast;
 import Objects.Brick;
+import Objects.DoubleB;
+import Objects.DoubleScore;
+import Objects.Heart;
+import Objects.Sheild;
 import Objects.SpaceShip;
 import Objects.ball;
 import images.Images;
+import interfaces.ICollectibleItem;
 import interfaces.IShowableObject;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -56,8 +63,8 @@ public class Game extends PApplet {
         if (chickenCount <= 0) {
             return;
         }
-        int level = (int) (random(1, 3));
-        
+        int level = randomNum(1, 3);
+
         Brick brick = new Brick((int) (width * 0.085), (int) (width * 0.085), level,
                 getChickByLevel(level), this);
         objects.add(brick);
@@ -166,6 +173,11 @@ public class Game extends PApplet {
         mousePressed = false;
     }
 
+    private int randomNum(int start, int end) {
+        Random random = new Random();
+        return random.nextInt(end - start + 1) + start;
+    }
+
     private void startGame() {
 
         background(0);
@@ -180,12 +192,24 @@ public class Game extends PApplet {
                     }
                     obj.move();
                     obj.show();
+                    if (obj instanceof ICollectibleItem) {
+                        ICollectibleItem c = (ICollectibleItem) obj;
+                        if (c.getY() > height - (0.15 * width)) {
+                            if (c.getX() > mouseX - (0.1 * width) && c.getX() < mouseX + (0.05 * width)) {
+                                objects.remove(obj);
+                                i--;
+                                c.Collect();
+                                continue;
+                            }
+                        }
+                    }
                     if (obj.getY() > height) {
                         objects.remove(i);
                         if (obj instanceof Brick) {
                             loseHeart();
                         }
                         i--;
+                        continue;
                     }
                 }
                 for (int i = 0; i < balls.size(); i++) {
@@ -193,7 +217,7 @@ public class Game extends PApplet {
                     ball1.move();
                     ball1.show();
                     if (ball1.getY() < 0) {
-                        balls.remove(i);
+                        balls.remove(ball1);
                         i--;
                     }
                     for (int j = 0; j < objects.size(); j++) {
@@ -204,10 +228,11 @@ public class Game extends PApplet {
                                     objects.remove(j);
                                     chickenCount--;
                                     score += multiplier * brick.getScore();
+                                    addItem(brick.getBlockx(), brick.getY());
                                     addChicken();
                                 }
 
-                                balls.remove(i);
+                                balls.remove(ball1);
                                 i--;
                                 break;
                             }
@@ -228,6 +253,34 @@ public class Game extends PApplet {
             }
         } else {
             lost();
+        }
+    }
+
+    private void addItem(int x, int y) {
+        int i = randomNum(1, 15);
+        switch (i) {
+            case 1: {
+                objects.add(new Heart(x, y, (int) (width * 0.05), (int) (width * 0.05), this));
+                break;
+            }
+            case 2: {
+                objects.add(new Blast(x, y, (int) (width * 0.05), (int) (width * 0.05), this));
+                break;
+            }
+            case 3: {
+                objects.add(new Sheild(x, y, (int) (width * 0.05), (int) (width * 0.05), this));
+                break;
+            }
+            case 4: {
+                objects.add(new DoubleScore(x, y, (int) (width * 0.05), (int) (width * 0.05), this));
+                break;
+            }
+            case 5: {
+                objects.add(new DoubleB(x, y, (int) (width * 0.05), (int) (width * 0.05), this));
+                break;
+            }
+            default:
+                break;
         }
     }
 

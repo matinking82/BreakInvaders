@@ -38,7 +38,7 @@ public class Blast implements IShowableObject, ICollectibleItem {
         this.blastY += 10;
     }
 
-    public int getBlastX() {
+    public int getX() {
         return this.blastX;
     }
 

@@ -37,7 +37,7 @@ public class DoubleB implements IShowableObject,ICollectibleItem{
         doubleBY+=10;
     }
 
-    public int getDoubleBX() {
+    public int getX() {
         return this.doubleBX;
     }
     public void setDoubleBX(int doubleBX) {

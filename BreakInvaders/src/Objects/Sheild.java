@@ -36,7 +36,7 @@ public class Sheild implements IShowableObject, ICollectibleItem {
 
     }
 
-    public int getShieldX() {
+    public int getX() {
         return this.sheildX;
     }
 
