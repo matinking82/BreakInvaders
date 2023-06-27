@@ -46,7 +46,7 @@ public class Game extends PApplet {
         Images.Blast = loadImage("../images/Blast.png");
         Images.Heart = loadImage("../images/heart.png");
         Images.DoubleB = loadImage("../images/DoubleB.png");
-        Images.Score = loadImage("../images/DoubleScore.png");
+        Images.Score = loadImage("../images/score.png");
         Images.Shield = loadImage("../images/shield.png");
         Images.SpaceShip = loadImage("../images/sps.png");
         Images.chicken1 = loadImage("../images/chick1.png");
