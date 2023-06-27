@@ -1,22 +1,20 @@
 package Objects;
 
 import interfaces.IShowableObject;
-import processing.core.PApplet;
 
-import java.util.Random;
-
+import Game.Game;
 import images.Images;
 import interfaces.ICollectibleItem;
 
 public class Sheild implements IShowableObject, ICollectibleItem {
-    PApplet processing;
+    Game processing;
     private int sheildwidth;
     private int sheildheight;
     private int sheildX;
     private int sheildY;
     static boolean sheildAffect = false;
 
-    public Sheild(int x, int y, int sheildheight, int sheildwidth, PApplet processing) {
+    public Sheild(int x, int y, int sheildheight, int sheildwidth, Game processing) {
         this.sheildheight = sheildheight;
         this.sheildwidth = sheildwidth;
         this.processing = processing;
@@ -33,7 +31,7 @@ public class Sheild implements IShowableObject, ICollectibleItem {
 
     @Override
     public void Collect() {
-
+        Game.Shield++;
     }
 
     public int getX() {
@@ -72,10 +70,4 @@ public class Sheild implements IShowableObject, ICollectibleItem {
     public void move() {
         this.sheildY += 10;
     }
-
-    private int randomNum(int start, int end) {
-        Random random = new Random();
-        return random.nextInt(end - start + 1) + start;
-    }
-
 }

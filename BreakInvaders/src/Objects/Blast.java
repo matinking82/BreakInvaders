@@ -1,10 +1,7 @@
 package Objects;
 
 import interfaces.IShowableObject;
-import processing.core.PApplet;
-
-import java.util.Random;
-
+import Game.Game;
 import images.Images;
 import interfaces.ICollectibleItem;
 
@@ -13,9 +10,9 @@ public class Blast implements IShowableObject, ICollectibleItem {
     private int blastY;
     private int blastHeight;
     private int blastWidth;
-    PApplet processing;
+    Game processing;
 
-    public Blast(int blastX, int blastY, int blastHeight, int blastWidth, PApplet processing) {
+    public Blast(int blastX, int blastY, int blastHeight, int blastWidth, Game processing) {
         this.blastHeight = blastHeight;
         this.blastWidth = blastWidth;
         this.processing = processing;
@@ -30,7 +27,15 @@ public class Blast implements IShowableObject, ICollectibleItem {
 
     @Override
     public void Collect() {
-
+        for (int i = 0; i < Game.objects.size(); i++) {
+            IShowableObject obj = Game.objects.get(i);
+            if (obj instanceof Brick) {
+                if (((Brick) obj).hit()) {
+                    Game.objects.remove(obj);
+                    i--;
+                }
+            }
+        }
     }
 
     @Override
@@ -68,10 +73,5 @@ public class Blast implements IShowableObject, ICollectibleItem {
 
     public void setBlastWidth(int blastWidth) {
         this.blastWidth = blastWidth;
-    }
-
-    private int randomNum(int start, int end) {
-        Random random = new Random();
-        return random.nextInt(end - start + 1) + start;
     }
 }

@@ -1,20 +1,18 @@
 package Objects;
 
-import java.util.Random;
-
+import Game.Game;
 import images.Images;
 import interfaces.ICollectibleItem;
 import interfaces.IShowableObject;
-import processing.core.PApplet;
 
 public class Heart implements IShowableObject, ICollectibleItem {
-    PApplet processing;
+    Game processing;
     private int width;
     private int height;
     private int heartX;
     private int heartY;
 
-    public Heart(int x, int y, int width, int height, PApplet processing) {
+    public Heart(int x, int y, int width, int height, Game processing) {
         this.processing = processing;
         this.width = width;
         this.height = height;
@@ -30,7 +28,7 @@ public class Heart implements IShowableObject, ICollectibleItem {
 
     @Override
     public void Collect() {
-
+        Game.lives++;
     }
 
     public int getWidth() {
@@ -70,10 +68,4 @@ public class Heart implements IShowableObject, ICollectibleItem {
         heartY += 10;
 
     }
-
-    private int randomNum(int start, int end) {
-        Random random = new Random();
-        return random.nextInt(end - start + 1) + start;
-    }
-
 }

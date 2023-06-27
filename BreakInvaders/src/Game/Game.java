@@ -27,8 +27,9 @@ public class Game extends PApplet {
     private static int button = 0;
     private static boolean gameOver;
     public static int lives = 3;
+    public static int Shield = 0;
     public static int score;
-    static int multiplier = 1;
+    public static int DoubleBullet = 1;
     IDatabaseContext db = new DatabaseContext();
     private boolean checkSave = false;
     private boolean checkBoss = true;
@@ -224,12 +225,17 @@ public class Game extends PApplet {
                         if (objects.get(j) instanceof Brick) {
                             Brick brick = (Brick) objects.get(j);
                             if (isHit(ball1, brick)) {
-                                if (brick.hit()) {
-                                    objects.remove(j);
-                                    chickenCount--;
-                                    score += multiplier * brick.getScore();
-                                    addItem(brick.getBlockx(), brick.getY());
-                                    addChicken();
+                                int loop = (DoubleBullet > 0) ? 2 : 1;
+                                DoubleBullet = DoubleBullet + 1 - loop;
+                                for (int k = 0; k < loop; k++) {
+                                    if (brick.hit()) {
+                                        objects.remove(j);
+                                        chickenCount--;
+                                        score += brick.getScore();
+                                        addItem(brick.getBlockx(), brick.getY());
+                                        addChicken();
+                                        break;
+                                    }
                                 }
 
                                 balls.remove(ball1);
@@ -333,7 +339,8 @@ public class Game extends PApplet {
         textSize(35);
         image(Images.Pause, width - 60, 10, 50, 50);
         text("Lives :" + lives, 20, 40);
-        text("Score :" + score, 20, 90);
+        text("Shield :" + Shield, 20, 90);
+        text("Score :" + score, 20, 140);
         ButtonClicked2();
 
     }
@@ -428,7 +435,11 @@ public class Game extends PApplet {
     }
 
     public void loseHeart() {
-        lives--;
+        if (Shield <= 0) {
+            lives--;
+        } else {
+            Shield--;
+        }
         chickenCount--;
         if (lives <= 0) {
             gameOver = true;

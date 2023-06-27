@@ -1,20 +1,18 @@
 package Objects;
 
-import java.util.Random;
-
+import Game.Game;
 import images.Images;
 import interfaces.ICollectibleItem;
 import interfaces.IShowableObject;
-import processing.core.PApplet;
 
 public class DoubleScore implements ICollectibleItem, IShowableObject {
-    PApplet processing;
+    Game processing;
     private int width;
     private int height;
     private int scoreX;
     private int scoreY;
 
-    public DoubleScore(int x, int y, int width, int height, PApplet processing) {
+    public DoubleScore(int x, int y, int width, int height, Game processing) {
         this.width = width;
         this.height = height;
         this.processing = processing;
@@ -35,7 +33,7 @@ public class DoubleScore implements ICollectibleItem, IShowableObject {
 
     @Override
     public void Collect() {
-
+        Game.score += 1000;
     }
 
     public int getWidth() {
@@ -69,10 +67,4 @@ public class DoubleScore implements ICollectibleItem, IShowableObject {
     public void setScoreY(int scoreY) {
         this.scoreY = scoreY;
     }
-
-    private int randomNum(int start, int end) {
-        Random random = new Random();
-        return random.nextInt(end - start + 1) + start;
-    }
-
 }
