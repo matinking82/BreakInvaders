@@ -94,7 +94,7 @@ public class Brick implements IShowableObject, IHittableObject {
 
     @Override
     public void move() {
-        Blocky += 3;
+        Blocky += 2;
         if (let && Blocky >= 2 * height) {
             let = false;
             processing.addChicken();
